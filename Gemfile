@@ -7,7 +7,7 @@ gem 'rails', '7.1.3.4'
 gem 'aasm', '~> 5.3'
 gem 'barnes', '~> 0.0'
 gem 'bootsnap', '~> 1.18', require: false
-gem 'classy-yaml', '~> 1.2'
+gem 'classy-yaml', '~> 1.3'
 gem 'cssbundling-rails', '~> 1.4'
 gem 'debug', '~> 1.10'
 gem 'devise', '~> 4.9'
@@ -69,7 +69,7 @@ end
 
 group :development, :test do
   gem 'dotenv-rails', '~> 3.1'
-  gem 'parallel_tests', '~> 4.7'
+  gem 'parallel_tests', '~> 5.0'
   gem 'rspec-rails', '~> 7.0'
 end
 
