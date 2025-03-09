@@ -6034,7 +6034,7 @@ __metadata:
     stimulus-use: "npm:^0.52.3"
     stylelint: "npm:^16.13.0"
     stylelint-config-standard: "npm:^37.0.0"
-    tailwindcss: "npm:4.0.7"
+    tailwindcss: "npm:4.0.12"
     tippy.js: "npm:^6.3.7"
   languageName: unknown
   linkType: soft
@@ -6548,10 +6548,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:4.0.7":
-  version: 4.0.7
-  resolution: "tailwindcss@npm:4.0.7"
-  checksum: 10c0/d884b580022a439e26c1c372dd693d62f552b19635c3e018af640cca00357c4407710c452bfe465902299698a325f6215777807165f7e94f8f12411651ae3d6a
+"tailwindcss@npm:4.0.12":
+  version: 4.0.12
+  resolution: "tailwindcss@npm:4.0.12"
+  checksum: 10c0/186e94e49b97e974daf999c350bfc50e727039f22c44baf9144b987b6c9b754bc983e8c9ef5b99a3ca2d399115eb7811967f66cf9e88edc08ac729746d80dc56
   languageName: node
   linkType: hard
 
