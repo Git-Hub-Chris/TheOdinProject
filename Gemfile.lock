@@ -126,7 +126,7 @@ GEM
     cronex (0.15.0)
       tzinfo
       unicode (>= 0.4.4.5)
-    css_parser (1.19.1)
+    css_parser (1.21.0)
       addressable
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
@@ -268,7 +268,7 @@ GEM
     loofah (2.24.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
-    lookbook (2.3.4)
+    lookbook (2.3.7)
       activemodel
       css_parser
       htmlbeautifier (~> 1.3)
@@ -380,7 +380,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.1.10)
+    rack (3.1.11)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
     rack-mini-profiler (3.3.1)
@@ -432,7 +432,7 @@ GEM
       ffi (~> 1.0)
     rdoc (6.12.0)
       psych (>= 4.0.0)
-    redcarpet (3.6.0)
+    redcarpet (3.6.1)
     redis (5.3.0)
       redis-client (>= 0.22.0)
     redis-client (0.23.2)
@@ -450,7 +450,7 @@ GEM
       netrc (~> 0.8)
     rexml (3.4.1)
     rotp (6.3.0)
-    rouge (4.5.0)
+    rouge (4.5.1)
     rqrcode (2.2.0)
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
@@ -634,7 +634,7 @@ DEPENDENCIES
   kramdown-parser-gfm
   letter_opener (~> 1.8)
   listen (~> 3.9)
-  lookbook (~> 2.3.4)
+  lookbook (~> 2.3.7)
   newrelic_rpm (~> 9.16)
   noticed (~> 1.6)
   octokit (~> 9.2)
