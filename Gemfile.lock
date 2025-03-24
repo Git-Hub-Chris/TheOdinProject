@@ -163,7 +163,7 @@ GEM
       dotenv (= 3.1.4)
       railties (>= 6.1)
     drb (2.2.1)
-    dry-initializer (3.1.1)
+    dry-initializer (3.2.0)
     erb_lint (0.9.0)
       activesupport
       better_html (>= 2.0.1)
@@ -623,7 +623,7 @@ DEPENDENCIES
   discard (~> 1.4)
   discordrb-webhooks (~> 3.5)
   dotenv-rails (~> 3.1)
-  dry-initializer (~> 3.1)
+  dry-initializer (~> 3.2)
   erb_lint (~> 0.9)
   factory_bot_rails (~> 6.4)
   faraday-retry (~> 2.2)
