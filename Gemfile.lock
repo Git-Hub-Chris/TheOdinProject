@@ -665,7 +665,7 @@ DEPENDENCIES
   rspec-retry (~> 0.6)
   rspec-snapshot (~> 2.0)
   rspec_junit_formatter (~> 0.6)
-  rubocop (~> 1.73)
+  rubocop (~> 1.75)
   rubocop-performance (~> 1.22)
   rubocop-rails (~> 2.31)
   rubocop-rspec (~> 2.25)
