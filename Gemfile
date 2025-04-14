@@ -37,7 +37,7 @@ gem 'propshaft', '~> 1.1'
 gem 'public_activity', '~> 3.0'
 gem 'puma', '~> 6.6'
 gem 'rack-attack', '~> 6.7'
-gem 'redis', '~> 5.3'
+gem 'redis', '~> 5.4'
 gem 'rqrcode', '~> 2.2'
 gem 'ruby-progressbar', '~> 1.13'
 gem 'scenic', '~> 1.8'
@@ -61,7 +61,7 @@ group :development do
   gem 'lookbook', '~> 2.3.4'
   gem 'rack-mini-profiler'
   gem 'rubocop', '~> 1.75', require: false
-  gem 'rubocop-performance', '~> 1.22', require: false
+  gem 'rubocop-performance', '~> 1.25', require: false
   gem 'rubocop-rails', '~> 2.31', require: false
   gem 'rubocop-rspec', '~> 2.25', require: false
   gem 'web-console', '~> 4.2'
