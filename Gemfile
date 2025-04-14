@@ -25,7 +25,7 @@ gem 'jsbundling-rails', '~> 1.3'
 gem 'kramdown', '~> 2.5'
 gem 'kramdown-parser-gfm'
 gem 'newrelic_rpm', '~> 9.16'
-gem 'noticed', '~> 1.6'
+gem 'noticed', '~> 2.6'
 gem 'octokit', '~> 9.2'
 gem 'omniauth-github', '~> 2.0.1'
 gem 'omniauth-google-oauth2', '~> 1.2.1'
@@ -37,7 +37,7 @@ gem 'propshaft', '~> 1.1'
 gem 'public_activity', '~> 3.0'
 gem 'puma', '~> 6.6'
 gem 'rack-attack', '~> 6.7'
-gem 'redis', '~> 5.3'
+gem 'redis', '~> 5.4'
 gem 'rqrcode', '~> 2.2'
 gem 'ruby-progressbar', '~> 1.13'
 gem 'scenic', '~> 1.8'
@@ -61,7 +61,7 @@ group :development do
   gem 'lookbook', '~> 2.3.4'
   gem 'rack-mini-profiler'
   gem 'rubocop', '~> 1.75', require: false
-  gem 'rubocop-performance', '~> 1.22', require: false
+  gem 'rubocop-performance', '~> 1.25', require: false
   gem 'rubocop-rails', '~> 2.31', require: false
   gem 'rubocop-rspec', '~> 2.25', require: false
   gem 'web-console', '~> 4.2'
@@ -69,7 +69,7 @@ end
 
 group :development, :test do
   gem 'dotenv-rails', '~> 3.1'
-  gem 'parallel_tests', '~> 5.0'
+  gem 'parallel_tests', '~> 5.1'
   gem 'rspec-rails', '~> 7.0'
 end
 
@@ -86,5 +86,5 @@ group :test do
   gem 'shoulda-matchers', '~> 6.4'
   gem 'simplecov', '~> 0.22', require: false
   gem 'vcr', '~> 6.3'
-  gem 'webmock', '~> 3.23'
+  gem 'webmock', '~> 3.25'
 end
