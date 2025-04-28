@@ -53,7 +53,7 @@ gem 'turbo-rails', '~> 2.0'
 gem 'view_component', '~> 3.21'
 
 # https://github.com/jamesmartin/inline_svg/issues/151
-gem 'inline_svg', '~> 1.9'
+gem 'inline_svg', '~> 1.10'
 
 group :development do
   gem 'letter_opener', '~> 1.8'
@@ -79,7 +79,7 @@ group :test do
   gem 'cuprite', '~> 0.15'
   gem 'erb_lint', '~> 0.9', require: false
   gem 'factory_bot_rails', '~> 6.4'
-  gem 'faraday-retry', '~> 2.2'
+  gem 'faraday-retry', '~> 2.3'
   gem 'rspec_junit_formatter', '~> 0.6'
   gem 'rspec-retry', '~> 0.6'
   gem 'rspec-snapshot', '~> 2.0'
