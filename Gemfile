@@ -7,7 +7,7 @@ gem 'rails', '7.1.3.4'
 gem 'aasm', '~> 5.3'
 gem 'barnes', '~> 0.0'
 gem 'bootsnap', '~> 1.18', require: false
-gem 'classy-yaml', '~> 1.3'
+gem 'classy-yaml', '~> 1.4'
 gem 'cssbundling-rails', '~> 1.4'
 gem 'debug', '~> 1.10'
 gem 'devise', '~> 4.9'
