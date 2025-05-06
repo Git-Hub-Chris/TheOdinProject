@@ -8,6 +8,9 @@ on:
 
 concurrency: ci-${{ github.ref }}
 
+permissions:
+  contents: read
+
 jobs:
   linters:
     name: Linters
