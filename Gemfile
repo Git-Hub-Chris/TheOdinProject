@@ -42,7 +42,7 @@ gem 'rqrcode', '~> 2.2'
 gem 'ruby-progressbar', '~> 1.13'
 gem 'scenic', '~> 1.8'
 gem 'seed-fu', '~> 2.3'
-gem 'sentry-rails', '~> 5.22'
+gem 'sentry-rails', '~> 5.24'
 gem 'sentry-ruby', '~> 5.23'
 gem 'sentry-sidekiq', '~> 5.22'
 gem 'sidekiq', '~> 8.0'
@@ -62,7 +62,7 @@ group :development do
   gem 'rack-mini-profiler'
   gem 'rubocop', '~> 1.75', require: false
   gem 'rubocop-performance', '~> 1.25', require: false
-  gem 'rubocop-rails', '~> 2.31', require: false
+  gem 'rubocop-rails', '~> 2.32', require: false
   gem 'rubocop-rspec', '~> 2.25', require: false
   gem 'web-console', '~> 4.2'
 end
