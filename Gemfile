@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '8.0.2'
 
-gem 'aasm', '~> 5.3'
+gem 'aasm', '~> 5.5'
 gem 'barnes', '~> 0.0'
 gem 'bootsnap', '~> 1.18', require: false
 gem 'classy-yaml', '~> 1.4'
