@@ -2,9 +2,9 @@ ruby File.read('.ruby-version').strip
 
 source 'https://rubygems.org'
 
-gem 'rails', '7.1.3.4'
+gem 'rails', '8.0.2'
 
-gem 'aasm', '~> 5.3'
+gem 'aasm', '~> 5.5'
 gem 'barnes', '~> 0.0'
 gem 'bootsnap', '~> 1.18', require: false
 gem 'classy-yaml', '~> 1.4'
@@ -16,7 +16,7 @@ gem 'devise-two-factor', '~> 6.1'
 gem 'discard', '~> 1.4'
 gem 'discordrb-webhooks', '~> 3.5'
 gem 'dry-initializer', '~> 3.2'
-gem 'flipper', '~> 1.2'
+gem 'flipper', '~> 1.3'
 gem 'flipper-active_record', '~> 1.3'
 gem 'flipper-ui', '~> 1.3'
 gem 'friendly_id', '~> 5.5'
@@ -24,9 +24,9 @@ gem 'github_webhook', '~> 1.4'
 gem 'jsbundling-rails', '~> 1.3'
 gem 'kramdown', '~> 2.5'
 gem 'kramdown-parser-gfm'
-gem 'newrelic_rpm', '~> 9.18'
-gem 'noticed', '~> 2.6'
-gem 'octokit', '~> 9.2'
+gem 'newrelic_rpm', '~> 9.19'
+gem 'noticed', '~> 2.7'
+gem 'octokit', '~> 10.0'
 gem 'omniauth-github', '~> 2.0.1'
 gem 'omniauth-google-oauth2', '~> 1.2.1'
 gem 'omniauth-rails_csrf_protection', '~> 1.0'
@@ -42,15 +42,15 @@ gem 'rqrcode', '~> 2.2'
 gem 'ruby-progressbar', '~> 1.13'
 gem 'scenic', '~> 1.8'
 gem 'seed-fu', '~> 2.3'
-gem 'sentry-rails', '~> 5.22'
+gem 'sentry-rails', '~> 5.24'
 gem 'sentry-ruby', '~> 5.23'
 gem 'sentry-sidekiq', '~> 5.22'
 gem 'sidekiq', '~> 8.0'
-gem 'sidekiq-cron', '~> 2.0'
+gem 'sidekiq-cron', '~> 2.3'
 gem 'stackprof', '~> 0.2'
 gem 'stimulus-rails', '~> 1.3'
 gem 'turbo-rails', '~> 2.0'
-gem 'view_component', '~> 3.21'
+gem 'view_component', '~> 3.23'
 
 # https://github.com/jamesmartin/inline_svg/issues/151
 gem 'inline_svg', '~> 1.10'
@@ -58,25 +58,25 @@ gem 'inline_svg', '~> 1.10'
 group :development do
   gem 'letter_opener', '~> 1.8'
   gem 'listen', '~> 3.9'
-  gem 'lookbook', '~> 2.3.4'
+  gem 'lookbook', '~> 2.3.10'
   gem 'rack-mini-profiler'
   gem 'rubocop', '~> 1.75', require: false
   gem 'rubocop-performance', '~> 1.25', require: false
-  gem 'rubocop-rails', '~> 2.31', require: false
-  gem 'rubocop-rspec', '~> 2.25', require: false
+  gem 'rubocop-rails', '~> 2.32', require: false
+  gem 'rubocop-rspec', '~> 3.6', require: false
   gem 'web-console', '~> 4.2'
 end
 
 group :development, :test do
   gem 'dotenv-rails', '~> 3.1'
-  gem 'parallel_tests', '~> 5.1'
-  gem 'rspec-rails', '~> 7.0'
+  gem 'parallel_tests', '~> 5.2'
+  gem 'rspec-rails', '~> 8.0'
 end
 
 group :test do
   gem 'capybara', '~> 3.40'
   gem 'capybara-email', '~> 3.0'
-  gem 'cuprite', '~> 0.15'
+  gem 'cuprite', '~> 0.17'
   gem 'erb_lint', '~> 0.9', require: false
   gem 'factory_bot_rails', '~> 6.4'
   gem 'faraday-retry', '~> 2.3'
