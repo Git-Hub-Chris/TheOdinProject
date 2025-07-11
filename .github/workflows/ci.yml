@@ -8,6 +8,9 @@ on:
 
 concurrency: ci-${{ github.ref }}
 
+permissions:
+  contents: read
+
 jobs:
   linters:
     name: Linters
@@ -34,7 +37,7 @@ jobs:
       - name: Run linters
         run: |
           bin/rubocop --parallel
-          bin/erblint --lint-all
+          bin/erb_lint --lint-all
           yarn run lint
           yarn run stylelint
 
@@ -64,6 +67,12 @@ jobs:
         image: redis
         ports: ["6379:6379"]
 
+    env:
+      RAILS_ENV: test
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+      SKIP_YARN_INSTALL: true
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -84,25 +93,11 @@ jobs:
           yarn install
 
       - name: Build assets
-        env:
-          RAILS_ENV: test
-          SKIP_YARN_INSTALL: true
         run: |
           bin/rails javascript:build
           bin/rails css:build
 
       - name: Setup test database
         run: |
-          bundle exec flatware fan rake db:test:prepare
 
-        env:
-          RAILS_ENV: test
-          POSTGRES_USERNAME: postgres
-          POSTGRES_PASSWORD: postgres
-
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-          POSTGRES_USERNAME: postgres
-          POSTGRES_PASSWORD: postgres
         run: ./bin/ci_spec
