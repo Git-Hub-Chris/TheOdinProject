@@ -1,96 +1,102 @@
 require 'rails_helper'
 
-RSpec.describe 'Admin Flags' do
+RSpec.describe 'Admin flags' do
   let!(:flag) { create(:flag, project_submission:) }
-  let(:user) { create(:user, admin: true) }
   let(:project_submission) { create(:project_submission, lesson:, user: submission_owner) }
-  let(:lesson) { create(:lesson, is_project: true, accepts_submission: true, has_live_preview: true) }
+  let(:lesson) { create(:lesson, is_project: true, accepts_submission: true, previewable: true) }
   let(:submission_owner) { create(:user, username: 'Simon Bell', email: 'simon@example.com', password: 'pa55word') }
 
   before do
-    sign_in(user)
+    sign_in(create(:admin_user))
     visit admin_flags_path
 
     within("#flag_#{flag.id}") do
-      find('a.resource_id_link').click
+      click_on('View')
     end
   end
 
-  context 'when handling the flag by dismissing it' do
-    before do
-      page.accept_confirm do
-        find(:test_id, 'dismiss-flag-btn').click
+  context 'when dismissing the flag' do
+    it 'dismisses the flag' do
+      click_on('Resolve flag')
+      choose('action_taken_dismiss')
+      click_on('Submit')
+
+      expect(page).to have_content('Flag dismissed')
+
+      within(:test_id, 'flag-status') do
+        expect(page).to have_content('Dismissed')
       end
-    end
 
-    it 'lets the admin know the flag has been successfully dismissed' do
-      expect(page).to have_current_path(admin_flag_path(flag))
-      expect(page).to have_content('Success: Flag has been dismissed.')
-    end
+      # resolve button is hidden
+      expect(page).to have_no_selector(:link_or_button, 'Resolve flag')
 
-    it 'disables the flag action buttons' do
-      expect(find(:test_id, 'dismiss-flag-btn')).to be_disabled
-      expect(find(:test_id, 'remove-submission-btn')).to be_disabled
-      expect(find(:test_id, 'ban-user-btn')).to be_disabled
-      expect(find(:test_id, 'notify-broken-link-btn')).to be_disabled
+      # flag is in resolved list
+      visit admin_flags_path(status: 'resolved')
+      expect(find("#flag_#{flag.id}")).to be_present
     end
   end
 
-  context 'when handling the flag by removing the submission' do
-    before do
-      page.accept_confirm do
-        find(:test_id, 'remove-submission-btn').click
+  context 'when removing the submission' do
+    it 'removes the project submission' do
+      click_on('Resolve flag')
+      choose('action_taken_removed_project_submission')
+      click_on('Submit')
+
+      expect(page).to have_content('Project submission removed')
+
+      within(:test_id, 'flag-status') do
+        expect(page).to have_content('Project submission removed')
       end
-    end
 
-    it 'lets the admin know the submission has been successfully removed' do
-      expect(page).to have_current_path(admin_flags_path)
-      expect(page).to have_content('Success: Submission has been removed.')
-    end
+      # resolve button is hidden
+      expect(page).to have_no_selector(:link_or_button, 'Resolve flag')
 
-    it 'removes the submission from the lesson page' do
-      visit lesson_path(lesson)
+      # flag is in resolved list
+      visit admin_flags_path(status: 'resolved')
+      expect(find("#flag_#{flag.id}")).to be_present
 
-      within(:test_id, 'submissions-list') do
-        expect(page).not_to have_content(submission_owner.username)
+      # removes the project solution from the submission list
+      using_session('learner') do
+        sign_in(create(:user))
+        visit lesson_project_submissions_path(lesson)
+
+        within(:test_id, 'submissions-list') do
+          expect(page).to have_no_content(submission_owner.username)
+        end
       end
-    end
-
-    it 'shows the flag in the resolved list' do
-      visit admin_flags_path(scope: 'resolved')
-
-      expect(page).to have_content(flag.id)
     end
   end
 
-  context 'when handling the flag by banning the submission owner' do
-    before do
-      page.accept_confirm do
-        find(:test_id, 'ban-user-btn').click
+  context 'when banning the submission owner' do
+    it 'bans the project submission owner' do
+      click_on('Resolve flag')
+      choose('action_taken_ban')
+      click_on('Submit')
+
+      expect(page).to have_content('Project submission owner has been banned')
+
+      within(:test_id, 'flag-status') do
+        expect(page).to have_content('Banned')
       end
-    end
 
-    it 'lets the admin know the user has been successfully banned' do
-      expect(page).to have_current_path(admin_flag_path(flag))
-      expect(page).to have_content('Success: User has been banned.')
-    end
+      # resolve button is hidden
+      expect(page).to have_no_selector(:link_or_button, 'Resolve flag')
 
-    it 'disables the flag action buttons' do
-      expect(find(:test_id, 'dismiss-flag-btn')).to be_disabled
-      expect(find(:test_id, 'remove-submission-btn')).to be_disabled
-      expect(find(:test_id, 'ban-user-btn')).to be_disabled
-      expect(find(:test_id, 'notify-broken-link-btn')).to be_disabled
-    end
+      # flag is in resolved list
+      visit admin_flags_path(status: 'resolved')
+      expect(find("#flag_#{flag.id}")).to be_present
 
-    it 'removes the submission from the lesson' do
-      visit lesson_path(lesson)
+      # The flagged project submission is not visible to other users
+      using_session('learner') do
+        sign_in(create(:user))
+        visit lesson_project_submissions_path(lesson)
 
-      within(:test_id, 'submissions-list') do
-        expect(page).not_to have_content(submission_owner.username)
+        within(:test_id, 'submissions-list') do
+          expect(page).to have_no_content(submission_owner.username)
+        end
       end
-    end
 
-    it 'prohibits the banned user from signing in again' do
+      # prohibits the banned user from signing in again
       using_session('the_banned_user') do
         visit new_user_session_path
         find(:test_id, 'email-field').fill_in(with: submission_owner.email)
@@ -103,29 +109,24 @@ RSpec.describe 'Admin Flags' do
     end
   end
 
-  context 'when handling the flag by notifying the submission owner of a broken link' do
-    before do
-      page.accept_confirm do
-        find(:test_id, 'notify-broken-link-btn').click
+  context 'when notifying the submission owner of a broken link' do
+    it 'gives the admin feedback to let them know the user has been notified' do
+      click_on('Resolve flag')
+      choose('action_taken_notified_user')
+      click_on('Submit')
+
+      expect(page).to have_content('Notification sent')
+
+      within(:test_id, 'flag-status') do
+        expect(page).to have_content('Notified')
       end
-    end
 
-    it 'lets the admin know the user has been successfully notified of the broken link' do
-      expect(page).to have_current_path(admin_flag_path(flag))
-      expect(page).to have_content('Success: User has been notified of broken link.')
-    end
+      # resolve button is hidden
+      expect(page).to have_no_selector(:link_or_button, 'Resolve flag')
 
-    it 'disables the flag action buttons' do
-      expect(find(:test_id, 'dismiss-flag-btn')).to be_disabled
-      expect(find(:test_id, 'remove-submission-btn')).to be_disabled
-      expect(find(:test_id, 'ban-user-btn')).to be_disabled
-      expect(find(:test_id, 'notify-broken-link-btn')).to be_disabled
-    end
-
-    it 'shows the flag in the resolved list' do
-      visit admin_flags_path(scope: 'resolved')
-
-      expect(page).to have_content(flag.id)
+      # flag is in resolved list
+      visit admin_flags_path(status: 'resolved')
+      expect(find("#flag_#{flag.id}")).to be_present
     end
   end
 end

@@ -18,7 +18,7 @@ course.add_section do |section|
   section.identifier_uuid = 'a5854f3d-8171-47d1-b53f-e325de67aca4'
 
   section.add_lessons(
-    ruby_lessons.fetch('How this Course Will Work'),
+    ruby_lessons.fetch('How This Course Will Work'),
     ruby_lessons.fetch('Installing Ruby'),
   )
 end
@@ -73,6 +73,8 @@ course.add_section do |section|
 
   section.add_lessons(
     ruby_lessons.fetch('Object Oriented Programming'),
+    ruby_lessons.fetch('Project Management'),
+    ruby_lessons.fetch('Linting and RuboCop'),
     ruby_lessons.fetch('Tic Tac Toe'),
     ruby_lessons.fetch('Mastermind'),
   )
@@ -124,6 +126,8 @@ course.add_section do |section|
     ruby_lessons.fetch('Space Complexity'),
     ruby_lessons.fetch('Common Data Structures and Algorithms'),
     ruby_lessons.fetch('Linked Lists'),
+    ruby_lessons.fetch('HashMap Data Structure'),
+    ruby_lessons.fetch('HashMap'),
     ruby_lessons.fetch('Binary Search Trees'),
     ruby_lessons.fetch('Knights Travails'),
   )
@@ -139,6 +143,7 @@ course.add_section do |section|
 
   section.add_lessons(
     git_lessons.fetch('A Deeper Look at Git'),
+    git_lessons.fetch('Working with Remotes'),
     git_lessons.fetch('Using Git in the Real World'),
   )
 end

@@ -1,10 +1,10 @@
 name: Heroku Review App on label
+permissions:
+  contents: read
+  pull-requests: write
 on:
   pull_request:
     types: [labeled]
-
-permissions:
-  contents: read
 
 jobs:
   create-review-app:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: fastruby/manage-heroku-review-app@v1.2
+      - uses: fastruby/manage-heroku-review-app@v1.3
         with:
           action: create
         env:
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: fastruby/manage-heroku-review-app@v1.2
+      - uses: fastruby/manage-heroku-review-app@v1.3
         with:
           action: destroy
         env:

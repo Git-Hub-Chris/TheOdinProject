@@ -15,6 +15,7 @@ RSpec.describe User do
   it { is_expected.to have_many(:user_providers).dependent(:destroy) }
   it { is_expected.to have_many(:flags).dependent(:destroy) }
   it { is_expected.to have_many(:notifications) }
+  it { is_expected.to have_many(:likes).dependent(:destroy) }
   it { is_expected.to belong_to(:path).optional(true) }
 
   context 'when user is created' do
@@ -23,6 +24,49 @@ RSpec.describe User do
     it 'enrolls the user in the default path' do
       user = create(:user)
       expect(user.path).to eql(default_path)
+    end
+  end
+
+  describe '.signed_up_on' do
+    it 'returns users who signed up on a given date' do
+      user_signed_up_yesterday = create(:user, created_at: Time.zone.yesterday)
+      create(:user, created_at: Time.zone.today)
+      create(:user, created_at: Time.zone.tomorrow)
+      create(:user, created_at: Time.zone.yesterday - 1.day)
+
+      expect(described_class.signed_up_on(Time.zone.yesterday)).to contain_exactly(user_signed_up_yesterday)
+    end
+  end
+
+  describe '.banned' do
+    it 'returns banned users' do
+      first_banned_user = create(:user, banned: true)
+      second_banned_user = create(:user, banned: true)
+      create(:user, banned: false)
+      create(:user, banned: false)
+
+      expect(described_class.banned).to contain_exactly(
+        first_banned_user, second_banned_user
+      )
+    end
+  end
+
+  describe '.search_by' do
+    it 'only returns users whose username or email matches the search term' do
+      barry = create(:user, username: 'Barry', email: 'barry@email.com')
+      alice = create(:user, username: 'Alice', email: 'alice@email.com')
+      bartholomew = create(:user, username: 'Bat', email: 'bartholomew@email.com')
+
+      expect(described_class.search_by('Bar')).to contain_exactly(barry, bartholomew)
+    end
+
+    context "when the search term doesn't match any users" do
+      it 'returns an empty array' do
+        create(:user, username: 'Barry')
+        create(:user, username: 'Alice')
+
+        expect(described_class.search_by('Z')).to be_empty
+      end
     end
   end
 
@@ -149,8 +193,8 @@ RSpec.describe User do
 
   describe '#dismissed_flags' do
     it 'returns flags the user has made that have been dismissed' do
-      non_dismissed_flag = create(:flag, flagger: user, taken_action: :ban)
-      dismissed_flag = create(:flag, flagger: user, taken_action: :dismiss)
+      non_dismissed_flag = create(:flag, flagger: user, action_taken: :ban)
+      dismissed_flag = create(:flag, flagger: user, action_taken: :dismiss)
 
       expect(user.dismissed_flags).to contain_exactly(dismissed_flag)
     end
@@ -187,6 +231,21 @@ RSpec.describe User do
       user = create(:user)
 
       expect(user.on_path?(path)).to be(false)
+    end
+  end
+
+  describe '#ban!' do
+    it "hides the user's project submissions" do
+      user = create(:user)
+      project_submission = create(:project_submission, user:)
+
+      expect { user.ban! }.to change { project_submission.reload.discarded? }.from(false).to(true)
+    end
+
+    it 'marks the user as banned' do
+      user = create(:user)
+
+      expect { user.ban! }.to change { user.reload.banned? }.from(false).to(true)
     end
   end
 end

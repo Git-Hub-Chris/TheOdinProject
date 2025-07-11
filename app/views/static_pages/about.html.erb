@@ -10,7 +10,7 @@
         </p>
       </div>
 
-      <h2 class="text-center text-gray-700 dark:text-gray-300 text-2xl mb-12">Our Beliefs</h2>
+      <h2 class="text-center text-gray-700 dark:text-gray-300 text-2xl mb-12">What you can expect at The Odin Project</h2>
       <%= render(AboutPage::BeliefComponent.with_collection(t('.beliefs'))) %>
     </div>
   </div>
@@ -28,19 +28,20 @@
       <h2 class="mb-4 font-bold text-2xl">Want to contact us?</h2>
 
       <p class="pb-8 max-w-md mx-auto dark:text-gray-400 text-gray-500">
-        Connect with our friendly community on discord, a chat and networking platform or <a href="mailto:theodinprojectcontact@gmail.com" class="text-gold hover:underline">send us an email</a>.
+        Connect with our friendly community on discord, a chat and networking platform or <a href="mailto:contact@theodinproject.com" class="underline hover:no-underline text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">send us an email</a>.
       </p>
 
-      <%= link_to 'Chat on Discord', ODIN_CHAT_URL, class: 'button button--secondary', target: '_blank', rel: 'noreferrer' %>
+      <%= link_to 'Chat on Discord', ODIN_CHAT_URL, class: 'button button--secondary px-4', target: '_blank', rel: 'noreferrer' %>
     </div>
   </div>
 </div>
 
-<div class="bg-gray-50 dark:bg-gray-900 ">
-  <div class="max-w-4xl mx-auto">
-  <%= render 'shared/bottom_cta',
-    button: contribute_button,
-    heading: 'Help the Odin Project stay current and meaningful to all future students, please contribute!',
-    sub_heading: '' %>
+<div class="bg-gray-50 dark:bg-gray-900 my-16">
+  <div class="max-w-2xl mx-auto text-lg text-center">
+    If you want to give back to our community, you can do so by contributing to our open source projects, or by supporting us financially.
+    <div class="flex justify-center space-x-4 mt-4 mb-8">
+      <a href="/contributing" class="button button--primary">Contribute</a>
+      <a href="/support_us" class="button button--primary">Donate</a>
+    </div>
   </div>
 </div>

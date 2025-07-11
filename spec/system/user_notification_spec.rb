@@ -3,23 +3,21 @@ require 'rails_helper'
 RSpec.describe 'User Notifications' do
   let!(:flag) { create(:flag, project_submission:) }
   let(:project_submission) { create(:project_submission, lesson:, user: submission_owner) }
-  let(:lesson) { create(:lesson, is_project: true, accepts_submission: true, has_live_preview: true) }
+  let(:lesson) { create(:lesson, is_project: true, accepts_submission: true, previewable: true) }
   let(:submission_owner) { create(:user, username: 'Simon Bell', email: 'simon@example.com', password: 'pa55word') }
-  let(:admin) { create(:user, admin: true) }
 
   before do
-    sign_in(admin)
+    sign_in(create(:admin_user))
     visit admin_flags_path
 
     within("#flag_#{flag.id}") do
-      find('a.resource_id_link').click
+      click_on('View')
     end
 
-    page.accept_confirm do
-      find(:test_id, 'notify-broken-link-btn').click
-    end
+    click_on('Resolve flag')
+    choose('action_taken_notified_user')
+    click_on('Submit')
 
-    sign_out(admin)
     sign_in(submission_owner)
   end
 
@@ -27,8 +25,8 @@ RSpec.describe 'User Notifications' do
     it 'displays the unread notification icon in the users navbar' do
       visit root_path
 
-      within(find(:test_id, 'navbar-notification-icon')) do
-        expect(page).to have_selector("span[data-test-id='unread-notifications']")
+      within(:test_id, 'navbar-notification-icon') do
+        expect(page).to have_css("span[data-test-id='unread-notifications']")
       end
     end
 
@@ -37,8 +35,8 @@ RSpec.describe 'User Notifications' do
 
       find(:test_id, 'navbar-notification-icon').click
 
-      within(find(:test_id, "notification-#{submission_owner.notifications.first.id}")) do
-        expect(page).to have_selector('[data-test-id="notification-unread-icon"]')
+      within(:test_id, "notification-#{submission_owner.notifications.first.id}") do
+        expect(page).to have_css('[data-test-id="notification-unread-icon"]')
       end
     end
   end
@@ -65,8 +63,8 @@ RSpec.describe 'User Notifications' do
     it 'does not display the unread notification icon' do
       visit root_path
 
-      within(find(:test_id, 'navbar-notification-icon')) do
-        expect(page).not_to have_selector("span[data-test-id='unread-notifications']")
+      within(:test_id, 'navbar-notification-icon') do
+        expect(page).to have_no_css("span[data-test-id='unread-notifications']")
       end
     end
 
@@ -75,8 +73,8 @@ RSpec.describe 'User Notifications' do
 
       find(:test_id, 'navbar-notification-icon').click
 
-      within(find(:test_id, "notification-#{submission_owner.notifications.first.id}")) do
-        expect(page).to have_selector('[data-test-id="notification-read-icon"]')
+      within(:test_id, "notification-#{submission_owner.notifications.first.id}") do
+        expect(page).to have_css('[data-test-id="notification-read-icon"]')
       end
     end
   end

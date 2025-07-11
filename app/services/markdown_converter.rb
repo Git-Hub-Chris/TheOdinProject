@@ -11,13 +11,13 @@ class MarkdownConverter
     sections = Kramdown::DocumentSections.new(markdown).all_sections
 
     if sections.any?
-      sections.map { |section| Kramdown::Document.new(section.content).to_html }.join
+      sections.map { |section| parse_with_github_flavored_markdown(section.content) }.join
     else
-      Kramdown::Document.new(markdown).to_html
+      parse_with_github_flavored_markdown(markdown)
     end
   end
 
   private
 
-  attr_reader :document
+
 end

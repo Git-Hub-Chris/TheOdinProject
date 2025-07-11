@@ -81,12 +81,12 @@ RSpec.describe Lesson do
       end
     end
 
-    context 'when three or more lessons share the same slug canidates' do
+    context 'when three or more lessons share the same slug candidates' do
       before do
         allow(SecureRandom).to receive(:hex).with(2).and_return('1234')
       end
 
-      it 'returns default slug canidate post fixed with the random hex' do
+      it 'returns default slug candidate post fixed with the random hex' do
         path = create(:path, short_title: 'path title')
         course = create(:course, title: 'course title', path:)
         create(:lesson, title: 'lesson title', course:)
@@ -118,6 +118,29 @@ RSpec.describe Lesson do
     end
   end
 
+  describe '#recently_added?' do
+    context 'when the lesson was added today' do
+      it 'returns true' do
+        lesson = create(:lesson, created_at: Time.zone.today)
+        expect(lesson.recently_added?).to be(true)
+      end
+    end
+
+    context 'when the lesson was added within last 2 weeks' do
+      it 'returns true' do
+        lesson = create(:lesson, created_at: 2.weeks.ago)
+        expect(lesson.recently_added?).to be(true)
+      end
+    end
+
+    context 'when the lesson was added more than 2 weeks ago' do
+      it 'returns false' do
+        lesson = create(:lesson, created_at: 2.weeks.ago - 1.day)
+        expect(lesson.recently_added?).to be(false)
+      end
+    end
+  end
+
   describe '#complete!' do
     it 'marks the lesson as completed' do
       expect { lesson.complete! }.to change { lesson.completed }.from(false).to(true)
@@ -133,11 +156,11 @@ RSpec.describe Lesson do
 
   describe '#import_content_from_github' do
     it 'uses the lesson content importer to get lesson content from github' do
-      allow(LessonContentImporter).to receive(:for)
+      allow(Github::LessonContentImporter).to receive(:for)
 
       lesson.import_content_from_github
 
-      expect(LessonContentImporter).to have_received(:for).with(lesson)
+      expect(Github::LessonContentImporter).to have_received(:for).with(lesson)
     end
   end
 

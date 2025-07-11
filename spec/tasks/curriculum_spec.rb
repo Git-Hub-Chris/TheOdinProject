@@ -3,16 +3,16 @@ require 'rake'
 
 describe ':curriculum' do
   before do
+    allow($stdout).to receive(:write)
     Rake.application.rake_require 'tasks/curriculum'
     Rake::Task.define_task(:environment)
-    allow($stdout).to receive(:write)
   end
 
   describe 'curriculum:update_content' do
     let!(:lesson) do
       create(
         :lesson,
-        github_path: '/README.md',
+        github_path: 'README.md',
         content: nil,
       )
     end

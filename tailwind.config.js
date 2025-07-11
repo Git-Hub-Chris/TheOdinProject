@@ -1,6 +1,7 @@
 module.exports = {
   content: [
     './app/**/*.html.erb',
+    './app/**/*.turbo_stream.erb',
     './app/components/**/*',
     './app/components/*.rb',
     './app/javascript/**/*.js',
@@ -12,9 +13,13 @@ module.exports = {
   ],
   safelist: [
     'lesson-note',
+    'lesson-note--tip',
+    'lesson-note--warning',
+    'lesson-note--critical',
     'lesson-content__panel',
     'anchor-link',
-    'toc-item-active'
+    'toc-item-active',
+    'inline-img'
   ],
   darkMode: 'class',
   theme: {
@@ -39,6 +44,11 @@ module.exports = {
                 '&:hover': {
                   color: theme('colors.gray.800'),
                 }
+              },
+            },
+            h4: {
+              a: {
+                'text-decoration': 'none',
               },
             },
             details: {
