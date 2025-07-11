@@ -42,9 +42,10 @@ Rails.application.configure do
   # caching is enabled.
   config.action_mailer.perform_caching = false
 
+
   routes.default_url_options = {
     host: ENV.fetch('HOST', 'localhost'),
-    port: ENV.fetch('HOST_PORT', 3001)
+    port: ENV.fetch('HOST_PORT', test_port)
   }
 
   # Tell Action Mailer not to deliver emails to the real world.

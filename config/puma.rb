@@ -1,4 +1,4 @@
-require 'barnes'
+enable_keep_alives false
 
 # This configuration file will be evaluated by Puma. The top-level methods that
 # are invoked here are part of Puma's configuration DSL. For more information
@@ -45,11 +45,5 @@ port        ENV['PORT']     || 3000
 environment ENV['RACK_ENV'] || 'development'
 
 on_worker_boot do
-  # Worker specific setup for Rails 4.1+
-  # See: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server#on-worker-boot
   ActiveRecord::Base.establish_connection
-end
-
-before_fork do
-  Barnes.start
 end
