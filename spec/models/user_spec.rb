@@ -17,6 +17,8 @@ RSpec.describe User do
   it { is_expected.to have_many(:notifications) }
   it { is_expected.to have_many(:likes).dependent(:destroy) }
   it { is_expected.to belong_to(:path).optional(true) }
+  it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
+  it { is_expected.to have_many(:bookmarked_lessons).through(:bookmarks).source(:lesson) }
 
   context 'when user is created' do
     let!(:default_path) { create(:path, default_path: true) }
@@ -48,6 +50,25 @@ RSpec.describe User do
       expect(described_class.banned).to contain_exactly(
         first_banned_user, second_banned_user
       )
+    end
+  end
+
+  describe '.search_by' do
+    it 'only returns users whose username or email matches the search term' do
+      barry = create(:user, username: 'Barry', email: 'barry@email.com')
+      alice = create(:user, username: 'Alice', email: 'alice@email.com')
+      bartholomew = create(:user, username: 'Bat', email: 'bartholomew@email.com')
+
+      expect(described_class.search_by('Bar')).to contain_exactly(barry, bartholomew)
+    end
+
+    context "when the search term doesn't match any users" do
+      it 'returns an empty array' do
+        create(:user, username: 'Barry')
+        create(:user, username: 'Alice')
+
+        expect(described_class.search_by('Z')).to be_empty
+      end
     end
   end
 

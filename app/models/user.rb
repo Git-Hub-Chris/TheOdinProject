@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include PgSearch::Model
+
   before_create :enroll_in_foundations
 
   devise :database_authenticatable, :registerable, :recoverable,
@@ -11,6 +13,8 @@ class User < ApplicationRecord
 
   has_many :lesson_completions, dependent: :destroy
   has_many :completed_lessons, through: :lesson_completions, source: :lesson
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmarked_lessons, through: :bookmarks, source: :lesson
   has_many :project_submissions, dependent: :destroy
   has_many :user_providers, dependent: :destroy
   has_many :flags, foreign_key: :flagger_id, dependent: :destroy, inverse_of: :flagger
@@ -23,6 +27,21 @@ class User < ApplicationRecord
   scope :created_after, ->(date) { where(arel_table[:created_at].gt(date)) }
   scope :signed_up_on, ->(date) { where(created_at: date.all_day) }
   scope :banned, -> { where(banned: true) }
+
+  pg_search_scope(
+    :search_by,
+    against: %i[
+      username
+      email
+    ],
+    using: {
+      tsearch: {
+        prefix: true,
+        dictionary: 'english',
+        tsvector_column: 'search_tsvector'
+      }
+    }
+  )
 
   def progress_for(course)
     @progress ||= Hash.new { |hash, c| hash[c] = CourseProgress.new(c, self) }
