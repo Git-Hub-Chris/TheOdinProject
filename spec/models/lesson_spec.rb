@@ -5,9 +5,11 @@ RSpec.describe Lesson do
 
   it { is_expected.to belong_to(:section) }
   it { is_expected.to have_one(:course).through(:section) }
+  it { is_expected.to have_one(:content) }
   it { is_expected.to have_many(:project_submissions) }
   it { is_expected.to have_many(:lesson_completions) }
   it { is_expected.to have_many(:completing_users).through(:lesson_completions) }
+  it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
 
   it { is_expected.to validate_presence_of(:position) }
 
@@ -80,12 +82,12 @@ RSpec.describe Lesson do
       end
     end
 
-    context 'when three or more lessons share the same slug canidates' do
+    context 'when three or more lessons share the same slug candidates' do
       before do
         allow(SecureRandom).to receive(:hex).with(2).and_return('1234')
       end
 
-      it 'returns default slug canidate post fixed with the random hex' do
+      it 'returns default slug candidate post fixed with the random hex' do
         path = create(:path, short_title: 'path title')
         course = create(:course, title: 'course title', path:)
         create(:lesson, title: 'lesson title', course:)
@@ -97,26 +99,87 @@ RSpec.describe Lesson do
     end
   end
 
-  describe '#position_in_section' do
-    let(:section) { create(:section) }
-    let(:first_lesson) { create(:lesson, position: 1, section:) }
-    let(:second_lesson) { create(:lesson, position: 2, section:) }
-    let(:third_lesson) { create(:lesson, position: 3, section:) }
+  describe '#completed' do
+    it 'return false by default' do
+      expect(lesson.completed).to be(false)
+    end
 
-    it 'returns the position of the lesson in the section' do
-      expect(first_lesson.position_in_section).to be(1)
-      expect(second_lesson.position_in_section).to be(2)
-      expect(third_lesson.position_in_section).to be(3)
+    context 'when the lesson has been completed' do
+      it 'returns true' do
+        lesson.completed = true
+        expect(lesson).to be_completed
+      end
+    end
+
+    context 'when the lesson has been not been completed' do
+      it 'returns false' do
+        lesson.completed = false
+        expect(lesson).not_to be_completed
+      end
     end
   end
 
-  describe '#import' do
+  describe '#recently_added?' do
+    context 'when the lesson was added today' do
+      it 'returns true' do
+        lesson = create(:lesson, created_at: Time.zone.today)
+        expect(lesson.recently_added?).to be(true)
+      end
+    end
+
+    context 'when the lesson was added within last 2 weeks' do
+      it 'returns true' do
+        lesson = create(:lesson, created_at: 2.weeks.ago)
+        expect(lesson.recently_added?).to be(true)
+      end
+    end
+
+    context 'when the lesson was added more than 2 weeks ago' do
+      it 'returns false' do
+        lesson = create(:lesson, created_at: 2.weeks.ago - 1.day)
+        expect(lesson.recently_added?).to be(false)
+      end
+    end
+  end
+
+  describe '#complete!' do
+    it 'marks the lesson as completed' do
+      expect { lesson.complete! }.to change { lesson.completed }.from(false).to(true)
+    end
+  end
+
+  describe '#incomplete!' do
+    it 'marks the lesson as incomplete' do
+      lesson.completed = true
+      expect { lesson.incomplete! }.to change { lesson.completed }.from(true).to(false)
+    end
+  end
+
+  describe '#import_content_from_github' do
     it 'uses the lesson content importer to get lesson content from github' do
-      allow(LessonContentImporter).to receive(:for)
+      allow(Github::LessonContentImporter).to receive(:for)
 
       lesson.import_content_from_github
 
-      expect(LessonContentImporter).to have_received(:for).with(lesson)
+      expect(Github::LessonContentImporter).to have_received(:for).with(lesson)
+    end
+  end
+
+  describe '#display_title' do
+    context 'when lesson is a project' do
+      it 'returns the project title' do
+        lesson = build_stubbed(:lesson, is_project: true, title: 'Ruby Basics')
+
+        expect(lesson.display_title).to eql('Project: Ruby Basics')
+      end
+    end
+
+    context 'when lesson is not a project' do
+      it 'returns the normal lesson title' do
+        lesson = build_stubbed(:lesson, is_project: false, title: 'Ruby Basics')
+
+        expect(lesson.display_title).to eql('Ruby Basics')
+      end
     end
   end
 end

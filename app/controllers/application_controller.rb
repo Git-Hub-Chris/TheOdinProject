@@ -2,32 +2,11 @@ class ApplicationController < ActionController::Base
   include CurrentTheme
   include Pagy::Backend
 
-  protect_from_forgery with: :exception
-
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_sentry_user, if: :current_user
   before_action :store_user_location!, if: :storable_location?
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found_error
-
-  rescue_from CanCan::AccessDenied do
-    respond_to do |format|
-      format.json { head :forbidden }
-      format.js { head :forbidden }
-      format.html do
-        redirect_to root_url, alert: 'You are not authorized to do that'
-      end
-    end
-  end
-
-  def authenticate_admin_user!
-    authenticate_user!
-
-    unless current_user.admin?
-      flash[:alert] = 'Unauthorized Access!'
-      redirect_to root_path
-    end
-  end
 
   def after_sign_out_path_for(_resource_or_scope)
     new_user_session_path
@@ -53,6 +32,10 @@ class ApplicationController < ActionController::Base
 
   def set_sentry_user
     Sentry.set_user(id: current_user.id, email: current_user.email)
+  end
+
+  def set_cache_control_header_to_no_store
+    response.cache_control.replace(no_store: true)
   end
 
   def configure_permitted_parameters

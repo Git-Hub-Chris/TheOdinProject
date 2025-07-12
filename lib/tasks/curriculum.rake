@@ -10,10 +10,13 @@ namespace :curriculum do
     task import: :environment do
       progressbar = ProgressBar.create total: Lesson.count, format: '%t: |%w%i| Completed: %c %a %e'
 
-      Lesson.all.each do |lesson|
+      Lesson.find_each do |lesson|
         lesson.import_content_from_github
         progressbar.increment
       end
+
+      # Fetch content from curriculum dynamically
+      DynamicContentImporter.import_all
     end
 
     desc 'Verify that all lessons have content'

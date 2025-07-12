@@ -3,14 +3,6 @@
 <div class="page-container">
   <div class="max-w-4xl mx-auto">
     <h1 class="page-heading-title">All Paths</h1>
-
-    <%= render PathComponent.new(path: @foundations, style: :wide, tagline: 'Start here') %>
-
-    <%= render DividerComponent.new(message: 'Then choose a learning path') %>
-
-    <div class="flex gap-x-10 gap-y-6 flex-col md:flex-row">
-      <% @fullstack_paths.each do |path| %>
-        <%= render PathComponent.new(path: path, style: :column) %>
       <% end %>
     </div>
   </div>

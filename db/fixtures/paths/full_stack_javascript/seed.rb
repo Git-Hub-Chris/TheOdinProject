@@ -4,7 +4,7 @@
 @path = Seeds::PathBuilder.build do |path|
   path.title = 'Full Stack JavaScript'
   path.short_title = 'Node Path'
-  path.description = "This path takes you through our entire JavaScript curriculum. The courses should be taken in the order that they are displayed. You'll learn everything you need to know to create beautiful responsive websites from scratch using JavaScript and NodeJs."
+  path.description = "This path takes you through our entire JavaScript curriculum. The courses should be taken in the order that they are displayed. You'll learn everything you need to know to create beautiful responsive websites from scratch using JavaScript and NodeJS."
   path.badge_uri = 'badge-javascript.svg'
   path.identifier_uuid = '624d152c-b522-4f7a-86aa-8f2d9c84b951'
   path.position = 3
@@ -13,6 +13,8 @@ end
 load './db/fixtures/paths/full_stack_javascript/courses/intermediate_html_css.rb'
 load './db/fixtures/paths/full_stack_javascript/courses/javascript.rb'
 load './db/fixtures/paths/full_stack_javascript/courses/advanced_html_css.rb'
+load './db/fixtures/paths/full_stack_javascript/courses/react.rb'
+load './db/fixtures/paths/full_stack_javascript/courses/databases.rb'
 load './db/fixtures/paths/full_stack_javascript/courses/node_js.rb'
 load './db/fixtures/paths/full_stack_javascript/courses/getting_hired.rb'
 

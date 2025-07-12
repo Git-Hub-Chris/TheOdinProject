@@ -9,7 +9,11 @@ class StaticPagesController < ApplicationController
 
   def faq; end
 
+  def team; end
+
   def terms_of_use; end
+
+  def privacy_policy; end
 
   def success_stories
     @success_stories = SuccessStory.all

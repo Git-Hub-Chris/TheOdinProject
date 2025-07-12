@@ -13,24 +13,24 @@ RSpec.describe 'Editing a Project Submission' do
   before do
     sign_in(user)
     visit lesson_path(lesson)
-    Pages::ProjectSubmissions::Form.fill_in_and_submit
+    Pages::ProjectSubmissions::Form.new.open.fill_in.submit
   end
 
   it 'successfully edits a submission' do
-    find(:test_id, 'edit-submission-btn').click
+    within(:test_id, 'current-user-solution') do
+      find(:test_id, 'submission-action-menu-btn').click
+      find(:test_id, 'edit-submission').click
+    end
 
     Pages::ProjectSubmissions::Form.new(**edited_field_values).tap do |form|
       form.fill_in
       form.submit
-      form.close
     end
 
-    users_submission = first(:test_id, 'submission-item')
-
-    within(users_submission) do
-      expect(users_submission).to have_content(user.username)
-      expect(users_submission.find(:test_id, 'view-code-btn')['href']).to eq('https://github.com/edited-project-repo-url')
-      expect(users_submission.find(:test_id, 'live-preview-btn')['href']).to eq('http://edited-live-preview-url.com/')
+    within(:test_id, 'current-user-solution') do
+      expect(page).to have_content(lesson.title)
+      expect(find(:test_id, 'view-code-btn')['href']).to eq('https://github.com/edited-project-repo-url')
+      expect(find(:test_id, 'live-preview-btn')['href']).to eq('http://edited-live-preview-url.com/')
     end
   end
 end

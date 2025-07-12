@@ -6,9 +6,13 @@
 
     <div class='max-w-xl mx-auto'>
       <%= render CardComponent.new do |card| %>
-        <% card.body do %>
+        <% card.with_body do %>
           <%= form_for resource, as: resource_name, url: password_path(resource_name), builder: TailwindFormBuilder, html: { method: :put, class: 'grid grid-cols-6 gap-6 grid-flow-row' } do |form| %>
               <%= form.hidden_field :reset_password_token %>
+
+              <% resource.errors[:reset_password_token].each do |error| %>
+                <span class="col-span-full text-sm text-red-600 dark:text-red-500"><%= error.html_safe %></span>
+              <% end %>
 
               <div class="col-span-full">
                 <%= form.label :password, 'New password' %>

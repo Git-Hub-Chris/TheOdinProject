@@ -31,7 +31,7 @@ course.add_section do |section|
   section.identifier_uuid = '472bf0bc-2667-4206-84ea-43498b1d67f9'
 
   section.add_lessons(
-    foundation_lessons.fetch('How this Course Will Work'),
+    foundation_lessons.fetch('How This Course Will Work'),
     foundation_lessons.fetch('Introduction to Web Development'),
     foundation_lessons.fetch('Motivation and Mindset'),
     foundation_lessons.fetch('Asking For Help'),
@@ -54,7 +54,7 @@ course.add_section do |section|
     foundation_lessons.fetch('Installations'),
     foundation_lessons.fetch('Text Editors'),
     foundation_lessons.fetch('Command Line Basics'),
-    foundation_lessons.fetch('Setting Up Git'),
+    foundation_lessons.fetch('Setting up Git'),
   )
 end
 
@@ -101,7 +101,8 @@ course.add_section do |section|
   section.identifier_uuid = 'd2476929-d71b-4b25-969b-8f7da6a40c94'
 
   section.add_lessons(
-    foundation_lessons.fetch('CSS Foundations'),
+    foundation_lessons.fetch('Intro to CSS'),
+    foundation_lessons.fetch('The Cascade'),
     foundation_lessons.fetch('Inspecting HTML and CSS'),
     foundation_lessons.fetch('The Box Model'),
     foundation_lessons.fetch('Block and Inline'),
@@ -134,35 +135,21 @@ course.add_section do |section|
   section.identifier_uuid = '331227f7-c939-4988-b8b9-e140d2ded362'
 
   section.add_lessons(
-    foundation_lessons.fetch('Fundamentals Part 1'),
-    foundation_lessons.fetch('Fundamentals Part 2'),
+    foundation_lessons.fetch('Variables and Operators'),
+    foundation_lessons.fetch('Installing Node.js'),
+    foundation_lessons.fetch('Data Types and Conditionals'),
     foundation_lessons.fetch('JavaScript Developer Tools'),
-    foundation_lessons.fetch('Fundamentals Part 3'),
+    foundation_lessons.fetch('Function Basics'),
     foundation_lessons.fetch('Problem Solving'),
     foundation_lessons.fetch('Understanding Errors'),
     foundation_lessons.fetch('Rock Paper Scissors'),
     foundation_lessons.fetch('Clean Code'),
-    foundation_lessons.fetch('Installing Node.js'),
-    foundation_lessons.fetch('Fundamentals Part 4'),
+    foundation_lessons.fetch('Arrays and Loops'),
     foundation_lessons.fetch('DOM Manipulation and Events'),
     foundation_lessons.fetch('Revisiting Rock Paper Scissors'),
     foundation_lessons.fetch('Etch-a-Sketch'),
-    foundation_lessons.fetch('Fundamentals Part 5'),
+    foundation_lessons.fetch('Object Basics'),
     foundation_lessons.fetch('Calculator'),
-  )
-end
-
-# +++++++++++++++++++++++++++++++
-# SECTION - The Back End
-# +++++++++++++++++++++++++++++++
-course.add_section do |section|
-  section.title = 'The Back End'
-  section.description = "Here you'll learn about the back end, where we'll demystify what goes on behind the scenes on a web server."
-  section.identifier_uuid = '1bda637d-2590-4e0e-b988-a74605d09a8a'
-
-  section.add_lessons(
-    foundation_lessons.fetch('Introduction to the Back End'),
-    foundation_lessons.fetch('Introduction to Frameworks'),
   )
 end
 

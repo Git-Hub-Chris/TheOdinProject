@@ -1,53 +1,17 @@
-import { Controller } from '@hotwired/stimulus';
-import { debounce } from 'lodash';
-import axios from '../src/js/axiosWithCsrf';
-
-axios.defaults.headers.common['Content-Type'] = 'application/json';
+import { Controller } from '@hotwired/stimulus'
 
 export default class ProgressController extends Controller {
-  static targets = ['percentage', 'progressCircle', 'loading'];
-
-  static classes = ['loading'];
+  static targets = ['progressCircle']
 
   static values = {
-    url: String,
-    percent: Number,
-    circumference: Number,
-    loading: Boolean,
-  };
 
-  initialize() {
-    this.fetchProgress = debounce(this.fetchProgress, 400).bind(this);
   }
 
-  connect() {
-    this.fetchProgress();
-  }
+  connect () {
+    const percentageRemaining = 100 - this.percentValue
 
-  fetchProgress() {
-    this.loadingValue = true;
-
-    axios.get(this.urlValue).then((response) => {
-      const { percentage } = response.data;
-
-      this.loadingValue = false;
-      this.percentValue = percentage;
-      this.percentageTarget.textContent = `${percentage}% Complete`;
-      this.percentageTarget.classList.remove(this.loadingClass);
-    });
-  }
-
-  percentValueChanged(percent) {
-    const offset = this.circumferenceValue - (percent / 100) * this.circumferenceValue;
-
-    setTimeout(() => { this.progressCircleTarget.style.strokeDashoffset = offset; }, 200);
-  }
-
-  loadingValueChanged(loading) {
-    if (loading) {
-      this.loadingTarget.classList.remove('hidden');
-    } else {
-      this.loadingTarget.classList.add('hidden');
+    if (this.progressCircleTarget.getAttribute('stroke-dashoffset') !== percentageRemaining) {
+      this.progressCircleTarget.setAttribute('stroke-dashoffset', percentageRemaining)
     }
   }
 }

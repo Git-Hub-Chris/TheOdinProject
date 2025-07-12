@@ -3,7 +3,7 @@
 ########################
 course = @path.add_course do |course|
   course.title = 'JavaScript'
-  course.description = "Make your websites dynamic and interactive with JavaScript! You'll create features and stand-alone applications. This module includes projects where you will learn how to manipulate the DOM, use object-oriented programming principles, and build single page applications with React."
+  course.description = "Make your websites dynamic and interactive with JavaScript! You'll create features and stand-alone applications. This module includes projects where you will learn how to manipulate the DOM, use object-oriented programming principles, and fetch real-world data using APIs."
   course.identifier_uuid = 'be963a26-8c2a-4af9-ac19-d68b526b5bc5'
   course.badge_uri = 'badge-javascript.svg'
 end
@@ -17,8 +17,8 @@ course.add_section do |section|
   section.identifier_uuid = 'a96a48d1-4e38-4f47-a90d-e260569c9ab5'
 
   section.add_lessons(
-    javascript_lessons.fetch('How this course will work'),
-    javascript_lessons.fetch('A quick review'),
+    javascript_lessons.fetch('How This Course Will Work'),
+    javascript_lessons.fetch('A Quick Review'),
   )
 end
 
@@ -26,20 +26,23 @@ end
 # SECTION - Organizing your JavaScript Code
 # +++++++++++++++++++++++++++++++++++++++++
 course.add_section do |section|
-  section.title = 'Organizing your JavaScript Code'
+  section.title = 'Organizing Your JavaScript Code'
   section.description = 'This series digs in to the things you need to write larger and larger applications with JavaScript. This is where it gets real!'
   section.identifier_uuid = 'd0be5e66-0acc-4c62-8993-8d50e5af15a0'
 
   section.add_lessons(
-    javascript_lessons.fetch('Organizing your JavaScript Code Introduction'),
+    javascript_lessons.fetch('Organizing Your JavaScript Code Introduction'),
     javascript_lessons.fetch('Objects and Object Constructors'),
     javascript_lessons.fetch('Library'),
     javascript_lessons.fetch('Factory Functions and the Module Pattern'),
     javascript_lessons.fetch('Tic Tac Toe'),
     javascript_lessons.fetch('Classes'),
     javascript_lessons.fetch('ES6 Modules'),
+    javascript_lessons.fetch('npm'),
     javascript_lessons.fetch('Webpack'),
     javascript_lessons.fetch('Restaurant Page'),
+    javascript_lessons.fetch('Revisiting Webpack'),
+    javascript_lessons.fetch('JSON'),
     javascript_lessons.fetch('OOP Principles'),
     javascript_lessons.fetch('Todo List'),
   )
@@ -70,7 +73,6 @@ course.add_section do |section|
   section.identifier_uuid = 'c26cc657-9d04-4d12-bc2e-1c8206696da7'
 
   section.add_lessons(
-    javascript_lessons.fetch('JSON'),
     javascript_lessons.fetch('Asynchronous Code'),
     javascript_lessons.fetch('Working with APIs'),
     javascript_lessons.fetch('Async and Await'),
@@ -94,54 +96,15 @@ course.add_section do |section|
   )
 end
 
-# ++++++++++++++++++
-# SECTION - React JS
-# ++++++++++++++++++
-course.add_section do |section|
-  section.title = 'React JS'
-  section.description = 'In this section you will learn the basics of the most popular frontend framework, React JS.'
-  section.identifier_uuid = 'bf4a29d2-6420-40bd-8e45-8f7e704a4d39'
-
-  section.add_lessons(
-    react_lessons.fetch('React Introduction'),
-    react_lessons.fetch('State and Props'),
-    react_lessons.fetch('Handle Inputs and Render Lists'),
-    react_lessons.fetch('CV Application'),
-    react_lessons.fetch('Lifecycle Methods'),
-    react_lessons.fetch('Hooks'),
-    react_lessons.fetch('Memory Card'),
-    react_lessons.fetch('Router'),
-    react_lessons.fetch('React Testing Part 1'),
-    react_lessons.fetch('React Testing Part 2'),
-    react_lessons.fetch('Shopping Cart'),
-    react_lessons.fetch('Advanced Concepts'),
-  )
-end
-
-# ++++++++++++++++++++++++++++++++++++
-# SECTION - JavaScript and the Backend
-# ++++++++++++++++++++++++++++++++++++
-course.add_section do |section|
-  section.title = 'JavaScript and the Backend'
-  section.description = "A real web app needs a back end in order to persist its data and do sensitive operations. Here you'll learn how to use ajax to send data requests to your Rails back end."
-  section.identifier_uuid = '490be3db-7c28-43d8-a530-328a0ba8188b'
-
-  section.add_lessons(
-    javascript_lessons.fetch('Using Ruby on Rails For Your Back End'),
-    javascript_lessons.fetch("Where's Waldo (A Photo Tagging App)"),
-  )
-end
-
 # ++++++++++++++++++++++++++++++++++++++
 # SECTION - Finishing Up with JavaScript
 # ++++++++++++++++++++++++++++++++++++++
 course.add_section do |section|
   section.title = 'Finishing Up with JavaScript'
-  section.description = "You've learned everything you need and all that remains to do is apply that knowledge to a worthy task. In this section you will be working on your capstone project so you can show off your range of skills."
+  section.description = "You've learned everything you need and all that remains to do is apply that knowledge to a worthy task."
   section.identifier_uuid = 'd3a05406-615d-4645-85f2-0cba667f2749'
 
   section.add_lessons(
-    javascript_lessons.fetch('JavaScript Final Project'),
     javascript_lessons.fetch('Conclusion'),
   )
 end

@@ -9,7 +9,8 @@ RSpec.describe Notifications::FlagSubmission do
       id: 120,
       flagger:,
       project_submission: flagged_submission,
-      reason: 'I find it offensive'
+      reason: :inappropriate,
+      extra: 'I find it offensive'
     )
   end
 
@@ -19,8 +20,9 @@ RSpec.describe Notifications::FlagSubmission do
   describe '#message' do
     it 'returns the daily summary message' do
       notification_message = "OdinUser has flagged a submission on #{flagged_submission.lesson.title}\n" \
-                             "Reason: I find it offensive\n" \
-                             'Resolve the flag here: http://localhost:3000/admin/flags/120'
+                             "Reason: inappropriate\n" \
+                             "Extra: I find it offensive\n" \
+                             "Resolve the flag here: http://localhost:#{Rails.application.routes.default_url_options[:port]}/admin/flags/120"
 
       expect(notification.message).to eq notification_message
     end
@@ -28,7 +30,7 @@ RSpec.describe Notifications::FlagSubmission do
 
   describe '#destination' do
     around do |example|
-      ClimateControl.modify(
+      Dotenv.modify(
         DISCORD_FLAGGED_SUBMISSIONS_CHANNEL: 'Flagged Submission Channel'
       ) do
         example.run

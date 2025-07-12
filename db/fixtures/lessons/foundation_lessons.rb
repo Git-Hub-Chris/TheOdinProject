@@ -1,7 +1,7 @@
 def foundation_lessons
   {
-    'How this Course Will Work' => {
-      title: 'How this Course Will Work',
+    'How This Course Will Work' => {
+      title: 'How This Course Will Work',
       description: 'Before you dive in, get familiar with the lay of the land up ahead.',
       is_project: false,
       github_path: '/foundations/introduction/how_this_course_will_work.md',
@@ -73,26 +73,26 @@ def foundation_lessons
       github_path: '/foundations/installations/command_line_basics.md',
       identifier_uuid: '3136c43f-e64d-4f92-bcb7-c7ed193c91e9',
     },
-    'Setting Up Git' => {
-      title: 'Setting Up Git',
+    'Setting up Git' => {
+      title: 'Setting up Git',
       description: 'The Source Code Ambulance',
       is_project: false,
       github_path: '/foundations/installations/setting_up_git.md',
       identifier_uuid: '8a13a21d-453e-4492-8240-58a2c8d9596f',
       installation_lesson: true,
     },
-    'Fundamentals Part 1' => {
-      title: 'Fundamentals Part 1',
-      description: "You'll get a chance to start picking up the programming fundamentals you need to make your webpages dynamic",
+    'Variables and Operators' => {
+      title: 'Variables and Operators',
+      description: 'In this lesson we learn about variables and operators.',
       is_project: false,
-      github_path: '/foundations/javascript_basics/fundamentals-1.md',
+      github_path: '/foundations/javascript_basics/variables_and_operators.md',
       identifier_uuid: '94b3cc9b-75f8-4738-aa5c-fc50fa51e335',
     },
-    'Fundamentals Part 2' => {
-      title: 'Fundamentals Part 2',
-      description: 'Continues where Fundamentals 2 leaves off!',
+    'Data Types and Conditionals' => {
+      title: 'Data Types and Conditionals',
+      description: 'In this lesson we learn about basic data types and conditionals.',
       is_project: false,
-      github_path: '/foundations/javascript_basics/fundamentals-2.md',
+      github_path: '/foundations/javascript_basics/data_types_and_conditionals.md',
       identifier_uuid: '06069c6b-8278-4023-be4f-336156621ba3',
     },
     'JavaScript Developer Tools' => {
@@ -102,11 +102,11 @@ def foundation_lessons
       github_path: '/foundations/javascript_basics/javascript_developer_tools.md',
       identifier_uuid: '60494609-9c68-4ddb-8b3b-96dc8afd876c',
     },
-    'Fundamentals Part 3' => {
-      title: 'Fundamentals Part 3',
-      description: 'Part 3 of our JS fundamentals course.',
+    'Function Basics' => {
+      title: 'Function Basics',
+      description: 'In this lesson we will explore the basics of functions.',
       is_project: false,
-      github_path: '/foundations/javascript_basics/fundamentals-3.md',
+      github_path: '/foundations/javascript_basics/function_basics.md',
       identifier_uuid: 'a5836067-c3c3-47fb-9cef-02de0d00fa3b',
     },
     'Problem Solving' => {
@@ -129,7 +129,7 @@ def foundation_lessons
       is_project: true,
       github_path: '/foundations/javascript_basics/project_rock_paper_scissors.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: '5cc2b83d-8024-4e07-82a0-38687b75c300',
     },
     'Clean Code' => {
@@ -139,11 +139,11 @@ def foundation_lessons
       github_path: '/foundations/javascript_basics/clean_code.md',
       identifier_uuid: 'e341018d-424e-40ac-b6cf-59fcdd422446',
     },
-    'Fundamentals Part 4' => {
-      title: 'Fundamentals Part 4',
-      description: 'Part 4 of our JS fundamentals course.',
+    'Arrays and Loops' => {
+      title: 'Arrays and Loops',
+      description: 'In this lesson we learn about arrays and loops.',
       is_project: false,
-      github_path: '/foundations/javascript_basics/fundamentals-4.md',
+      github_path: '/foundations/javascript_basics/arrays_and_loops.md',
       identifier_uuid: '336b3336-c589-4e61-876f-1c0e60617da4',
     },
     'Etch-a-Sketch' => {
@@ -152,14 +152,14 @@ def foundation_lessons
       is_project: true,
       github_path: '/foundations/javascript_basics/project_etch_a_sketch.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: 'fa9a5eea-a42c-4f89-9d53-6e1b8634d6ff',
     },
-    'Fundamentals Part 5' => {
-      title: 'Fundamentals Part 5',
-      description: 'Part 5 of our JS fundamentals course.',
+    'Object Basics' => {
+      title: 'Object Basics',
+      description: 'In this lesson we learn the basics of dealing with objects.',
       is_project: false,
-      github_path: '/foundations/javascript_basics/fundamentals-5.md',
+      github_path: '/foundations/javascript_basics/object_basics.md',
       identifier_uuid: 'd85b729e-237e-4850-a6a8-44d84ecc6f52',
     },
     'Calculator' => {
@@ -168,7 +168,7 @@ def foundation_lessons
       is_project: true,
       github_path: '/foundations/javascript_basics/project_calculator.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: '2aa09e04-cbfa-4b48-97a6-140a760eda08',
     },
     'Introduction to the Back End' => {
@@ -197,7 +197,7 @@ def foundation_lessons
       title: 'Introduction to HTML and CSS',
       description: 'Get started by learning about HTML and CSS, the building blocks of everything on the web.',
       is_project: false,
-      github_path: '/foundations/html_css/intro-to-html-css.md',
+      github_path: '/foundations/html_css/html-foundations/intro-to-html-css.md',
       identifier_uuid: '1e460bf6-5a8c-481f-a3f7-04e0dd938fac',
     },
     'HTML Boilerplate' => {
@@ -242,34 +242,39 @@ def foundation_lessons
       github_path: '/foundations/html_css/html-foundations/project-recipes.md',
       identifier_uuid: '3c8ad955-4f4e-4555-86bc-98503e1b785d',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
     },
-    'CSS Foundations' => {
-      title: 'CSS Foundations',
-      description: 'Make your HTML prettier with CSS.',
-      is_project: false,
-      github_path: '/foundations/html_css/css-foundations.md',
-      identifier_uuid: 'ea39c3c3-1699-4fae-8cce-df9746480ff2',
+    'Intro to CSS' => {
+      title: 'Intro to CSS',
+      description: 'Use CSS selectors to pick elements to style.',
+      github_path: '/foundations/html_css/css-foundations/intro-to-css.md',
+      identifier_uuid: '62411617-6ac6-44f9-86c8-6817203cf6ca',
+    },
+    'The Cascade' => {
+      title: 'The Cascade',
+      description: 'Use the cascade to apply styles by specificity.',
+      github_path: '/foundations/html_css/css-foundations/the-cascade.md',
+      identifier_uuid: '01b246d0-ebac-4d71-a6ad-d63798e8f65d',
     },
     'Inspecting HTML and CSS' => {
       title: 'Inspecting HTML and CSS',
       description: 'Use your browser to inspect and debug your HTML and CSS.',
       is_project: false,
-      github_path: '/foundations/html_css/inspecting-html-and-css/inspecting-html-and-css.md',
+      github_path: '/foundations/html_css/css-foundations/inspecting-html-and-css.md',
       identifier_uuid: 'd1741ff8-bf1f-4400-9c5e-8b23241bc50a',
     },
     'The Box Model' => {
       title: 'The Box Model',
       description: 'Learn about the box model, a foundational CSS concept.',
       is_project: false,
-      github_path: '/foundations/html_css/the-box-model/the-box-model.md',
+      github_path: '/foundations/html_css/css-foundations/the-box-model.md',
       identifier_uuid: '4a558775-ba50-4ce0-bdb9-e27b3f24699c',
     },
     'Block and Inline' => {
       title: 'Block and Inline',
       description: 'Learn about two common CSS display modes.',
       is_project: false,
-      github_path: '/foundations/html_css/block-and-inline.md',
+      github_path: '/foundations/html_css/css-foundations/block-and-inline.md',
       identifier_uuid: '25874e5c-2485-4e62-aaa5-5d6cf65b6b52',
     },
     'Introduction' => {
@@ -304,9 +309,9 @@ def foundation_lessons
       title: 'Landing Page',
       description: 'Build a complete landing page from a given web design.',
       is_project: true,
-      github_path: '/foundations/html_css/project/html-css-foundations-project.md',
+      github_path: '/foundations/html_css/flexbox/project-landing-page.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: '22e0c585-c146-4dab-9dc0-17a20f0ecbc5',
     },
     'DOM Manipulation and Events' => {

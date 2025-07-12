@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  acts_as_voter
+  include PgSearch::Model
+
   before_create :enroll_in_foundations
 
   devise :database_authenticatable, :registerable, :recoverable,
@@ -12,12 +13,35 @@ class User < ApplicationRecord
 
   has_many :lesson_completions, dependent: :destroy
   has_many :completed_lessons, through: :lesson_completions, source: :lesson
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmarked_lessons, through: :bookmarks, source: :lesson
   has_many :project_submissions, dependent: :destroy
   has_many :user_providers, dependent: :destroy
   has_many :flags, foreign_key: :flagger_id, dependent: :destroy, inverse_of: :flagger
   has_many :notifications, as: :recipient, dependent: :destroy
   has_many :announcements, dependent: nil
-  belongs_to :path, optional: true
+  has_many :likes, dependent: :destroy
+
+  belongs_to :path, optional: true, counter_cache: true
+
+  scope :created_after, ->(date) { where(arel_table[:created_at].gt(date)) }
+  scope :signed_up_on, ->(date) { where(created_at: date.all_day) }
+  scope :banned, -> { where(banned: true) }
+
+  pg_search_scope(
+    :search_by,
+    against: %i[
+      username
+      email
+    ],
+    using: {
+      tsearch: {
+        prefix: true,
+        dictionary: 'english',
+        tsvector_column: 'search_tsvector'
+      }
+    }
+  )
 
   def progress_for(course)
     @progress ||= Hash.new { |hash, c| hash[c] = CourseProgress.new(c, self) }
@@ -47,7 +71,7 @@ class User < ApplicationRecord
   end
 
   def dismissed_flags
-    flags.where(taken_action: :dismiss)
+    flags.where(action_taken: :dismiss)
   end
 
   def started_course?(course)
@@ -56,6 +80,13 @@ class User < ApplicationRecord
 
   def on_path?(path)
     self.path == path
+  end
+
+  def ban!
+    ActiveRecord::Base.transaction do
+      project_submissions.each(&:discard)
+      update!(banned: true)
+    end
   end
 
   private

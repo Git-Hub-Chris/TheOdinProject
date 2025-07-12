@@ -112,7 +112,7 @@ def html_and_css_lessons
       title: 'More CSS Properties',
       description: 'CSS can do quite a lot! Here we cover some more properties you can use to make your sites pop!',
       is_project: false,
-      github_path: '/intermediate_html_css/intermediate_css_concept/more_css_properties.md',
+      github_path: '/intermediate_html_css/intermediate_css_concepts/more_css_properties.md',
       identifier_uuid: 'a5db6aab-f888-40c5-8f84-6867f2c88141'
     },
     'Advanced Selectors' => {
@@ -199,7 +199,7 @@ def html_and_css_lessons
       description: 'Learn about how browsers style your HTML.',
       is_project: true,
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       github_path: '/intermediate_html_css/forms/project_sign_up_form.md',
       identifier_uuid: '91ab41f2-9c9d-449a-8461-329a5f7ecb1e'
     },
@@ -222,7 +222,7 @@ def html_and_css_lessons
       title: 'Positioning Grid Elements',
       description: 'Learn how to manipulate elements within a grid.',
       is_project: false,
-      github_path: '/intermediate_html_css/grid/positioning_grid_items.md',
+      github_path: '/intermediate_html_css/grid/positioning_grid_elements.md',
       identifier_uuid: '48813f31-ecc6-44c5-8f72-e7e24ae5e702'
     },
     'Advanced Grid Properties' => {
@@ -244,7 +244,7 @@ def html_and_css_lessons
       description: "Use what you've learned to Complete this project",
       is_project: true,
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       github_path: '/intermediate_html_css/grid/project_admin_dashboard.md',
       identifier_uuid: 'c35f0b7b-4d21-4d26-91e2-4af78519ae5f'
     },
@@ -277,13 +277,13 @@ def html_and_css_lessons
       github_path: '/advanced_html_css/responsive_design/media_queries.md',
       identifier_uuid: '61698363-3d2e-4f25-99d5-29ccdefdc856'
     },
-    'Personal Portfolio' => {
-      title: 'Personal Portfolio',
-      description: 'Create a fully responsive personal portfolio.',
+    'Homepage' => {
+      title: 'Homepage',
+      description: 'Create a fully responsive homepage.',
       is_project: true,
       accepts_submission: true,
-      has_live_preview: true,
-      github_path: '/advanced_html_css/responsive_design/project_personal_portfolio.md',
+      previewable: true,
+      github_path: '/advanced_html_css/responsive_design/project_homepage.md',
       identifier_uuid: 'd99b0c9d-cc6c-44e6-bab0-1c9a83edcfa3'
     },
   }

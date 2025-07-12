@@ -1,19 +1,24 @@
+<%= tag.div(id: dom_id(lesson, 'complete-button')) do %>
+  <% if lesson.completed? %>
+    <%= button_to lesson_completion_path(lesson.id, icon_only: true), method: :delete, form_class: 'group', class: 'relative hover:cursor-pointer', data: { complete: @lesson.completed?, test_id: 'complete-button' } do %>
+      <span class="group-aria-busy:opacity-0 transition-opacity delay-100">
+        <%= inline_svg_tag 'icons/checkmark-circle-solid.svg', class: "h-7 sm:h-8 text-teal-600 #{animation_class}", aria: true, title: 'check', desc: 'checkmark icon' %>
+      </span>
 
-<button
-  data-controller="complete-button"
-  data-complete-button-is-completed-value="<%= lesson_completed? %>"
-  data-complete-button-is-loading-value="false"
-  data-action="click->complete-button#toggle"
-  data-complete-button-id-param="<%= lesson.id %>"
-  data-complete-button-loading-class="complete-icon-button--loading"
-  data-complete-button-completed-class="complete-icon-button--completed !text-teal-700 dark:!text-teal-600"
-  data-test-id="complete-button"
-  class="complete-icon-button h-7 sm:h-8 text-gray-400 dark:text-gray-500 hover:scale-105">
-  <span class="complete-icon-button__loading-icon" data-complete-button-target="loading">
-    <%= inline_svg_tag 'icons/spinner.svg', class: 'animate-spin h-6 sm:h-7', aria: true, title: 'loading', desc: 'loading spinner' %>
-  </span>
-  <span class="complete-icon-button__completed-icon">
-    <%= inline_svg_tag 'icons/checkmark-circle-solid.svg', class: 'h-7 sm:h-8', aria: true, title: 'check', desc: 'checkmark icon' %>
-  </span>
+      <span class="group-aria-busy:opacity-100 opacity-0 absolute inset-0 flex items-center justify-center transition-opacity delay-100">
+         <%= inline_svg_tag 'icons/spinner.svg', class: 'h-6 sm:h-7 animate-spin text-gray-400', aria: true %>
+      </span>
+    <% end %>
+  <% else %>
+    <%= button_to lesson_completion_path(lesson.id, icon_only: true), form_class: 'group', class: 'relative hover:cursor-pointer', data: { complete: @lesson.completed?, test_id: 'complete-button' } do %>
 
-</button>
+      <span class="group-aria-busy:opacity-0 transition-opacity delay-100">
+        <%= inline_svg_tag 'icons/checkmark-circle-solid.svg', class: 'h-7 sm:h-8 text-gray-400 dark:text-gray-600', aria: true, title: 'check', desc: 'checkmark icon' %>
+      </span>
+
+      <span class="group-aria-busy:opacity-100 opacity-0 absolute inset-0 flex items-center justify-center transition-opacity delay-100">
+         <%= inline_svg_tag 'icons/spinner.svg', class: 'h-6 sm:h-7 animate-spin text-gray-400', aria: true %>
+      </span>
+    <% end %>
+  <% end %>
+<% end %>

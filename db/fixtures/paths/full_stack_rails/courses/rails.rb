@@ -18,8 +18,9 @@ course.add_section do |section|
   section.identifier_uuid = 'e8d47281-55b2-4cc1-9679-a46d99fa2287'
 
   section.add_lessons(
-    ruby_on_rails_lessons.fetch('How this Course Will Work'),
-    ruby_on_rails_lessons.fetch('Preparing for Deployment'),
+    ruby_on_rails_lessons.fetch('How This Course Will Work'),
+    shared_lessons.fetch('Introduction to the Back End'),
+    shared_lessons.fetch('Introduction to Frameworks'),
     ruby_on_rails_lessons.fetch('Installing Rails'),
     ruby_on_rails_lessons.fetch('A Railsy Web Refresher')
   )
@@ -37,8 +38,8 @@ course.add_section do |section|
     ruby_on_rails_lessons.fetch('Routing'),
     ruby_on_rails_lessons.fetch('Controllers'),
     ruby_on_rails_lessons.fetch('Views'),
-    ruby_on_rails_lessons.fetch('Deployment'),
     ruby_on_rails_lessons.fetch('Blog App'),
+    ruby_on_rails_lessons.fetch('Deployment'),
   )
 end
 
@@ -52,6 +53,9 @@ course.add_section do |section|
 
   section.add_lessons(
     ruby_on_rails_lessons.fetch('Active Record Basics'),
+    ruby_on_rails_lessons.fetch('Migrations'),
+    ruby_on_rails_lessons.fetch('Basic Validations'),
+    ruby_on_rails_lessons.fetch('Basic Associations'),
     ruby_on_rails_lessons.fetch('Micro-Reddit'),
   )
 end
@@ -116,7 +120,7 @@ course.add_section do |section|
 
   section.add_lessons(
     ruby_on_rails_lessons.fetch('APIs and Building Your Own'),
-    ruby_on_rails_lessons.fetch('Working With External APIs'),
+    ruby_on_rails_lessons.fetch('Working with External APIs'),
     ruby_on_rails_lessons.fetch('Kittens API'),
     ruby_on_rails_lessons.fetch('Flickr API'),
   )
