@@ -3,51 +3,32 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "eslint": "eslint --max-warnings 0 './app/javascript/**/*.js'",
-    "build": "node esbuild.config.mjs",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --postcss"
+
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@hotwired/turbo-rails": "^8.0.2",
-    "@rails/request.js": "^0.0.9",
-    "@sentry/browser": "^7.108.0",
+    "@hotwired/turbo-rails": "^8.0.12",
+    "@rails/request.js": "^0.0.11",
     "@stimulus/polyfills": "^2.0.0",
-    "@tailwindcss/forms": "^0.5.7",
-    "@tailwindcss/typography": "^0.5.10",
-    "autoprefixer": "^10.4.15",
-    "browserslist": "^4.23.2",
-    "chart.js": "^4.4.3",
+    "@tailwindcss/cli": "^4.0.12",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "browserslist": "^4.24.4",
+    "chart.js": "^4.4.4",
     "chartjs-plugin-crosshair": "^2.0.0",
-    "chartjs-plugin-tailwindcss-colors": "^0.2.2",
-    "chokidar": "^3.6.0",
-    "core-js": "^3.37.0",
-    "debounce": "^1.2.1",
+    "chokidar": "^4.0.3",
+    "debounce": "^2.2.0",
     "el-transition": "^0.0.7",
-    "esbuild": "^0.23.0",
-    "esbuild-plugin-prismjs": "^1.0.8",
-    "esbuild-rails": "^1.0.7",
-    "flatpickr": "^4.6.13",
-    "mermaid": "^10.9.1",
-    "postcss": "^8.4.40",
-    "postcss-import": "^16.1.0",
+
     "prismjs": "^1.29.0",
-    "regenerator-runtime": "^0.14.1",
-    "sortablejs": "^1.15.0",
-    "stimulus-use": "^0.51.3",
-    "tailwindcss": "^3.4.1",
+    "sortablejs": "^1.15.6",
+    "stimulus-use": "^0.52.3",
+    "tailwindcss": "4.0.7",
     "tippy.js": "^6.3.7"
   },
   "browserslist": [
     "defaults"
   ],
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/eslint-parser": "^7.25.1",
-    "@babel/preset-env": "^7.25.3",
-    "eslint": "^8.57.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-import": "^2.29.1"
-  },
-  "packageManager": "yarn@4.1.1"
+
 }

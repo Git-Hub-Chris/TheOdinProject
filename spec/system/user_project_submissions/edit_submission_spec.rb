@@ -27,6 +27,8 @@ RSpec.describe 'Editing a Project Submission on the Dashboard' do
       edit_form.submit
     end
 
+    expect(page).to have_no_content('Update your project')
+
     within(:test_id, 'submission-item') do
       expect(page).to have_content(lesson.title)
       expect(page.find(:test_id, 'view-code-btn')['href']).to eq('https://github.com/edited-project-repo-url')
@@ -52,7 +54,7 @@ RSpec.describe 'Editing a Project Submission on the Dashboard' do
       visit lesson_project_submissions_path(lesson)
 
       within(:test_id, 'submissions-list') do
-        expect(page).not_to have_content(user.username)
+        expect(page).to have_no_content(user.username)
       end
     end
   end
