@@ -12,8 +12,7 @@
         { "url": "https://github.com/devforce/heroku-buildpack-cleanup" }
       ],
       "addons": [
-        "heroku-postgresql:mini",
-        "heroku-redis:mini"
+        "heroku-postgresql:mini"
       ],
       "env": {
         "STAGING": {

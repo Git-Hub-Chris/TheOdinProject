@@ -27,20 +27,23 @@ end
 # SECTION - Organizing your JavaScript Code
 # +++++++++++++++++++++++++++++++++++++++++
 course.add_section do |section|
-  section.title = 'Organizing Your Javascript Code'
+  section.title = 'Organizing Your JavaScript Code'
   section.description = 'This series digs in to the things you need to write larger and larger applications with JavaScript. This is where it gets real!'
   section.identifier_uuid = '8b5f0c45-60f5-4dd9-8491-86d5d98f4ed3'
 
   section.add_lessons(
-    javascript_lessons.fetch('Organizing Your Javascript Code Introduction'),
+    javascript_lessons.fetch('Organizing Your JavaScript Code Introduction'),
     javascript_lessons.fetch('Objects and Object Constructors'),
     javascript_lessons.fetch('Library'),
     javascript_lessons.fetch('Factory Functions and the Module Pattern'),
     javascript_lessons.fetch('Tic Tac Toe'),
     javascript_lessons.fetch('Classes'),
     javascript_lessons.fetch('ES6 Modules'),
+    javascript_lessons.fetch('npm'),
     javascript_lessons.fetch('Webpack'),
     javascript_lessons.fetch('Restaurant Page'),
+    javascript_lessons.fetch('Revisiting Webpack'),
+    javascript_lessons.fetch('JSON'),
     javascript_lessons.fetch('OOP Principles'),
     javascript_lessons.fetch('Todo List'),
   )
@@ -71,7 +74,6 @@ course.add_section do |section|
   section.identifier_uuid = '46153ba3-d10b-4566-924f-b3fa549a05bc'
 
   section.add_lessons(
-    javascript_lessons.fetch('JSON'),
     javascript_lessons.fetch('Asynchronous Code'),
     javascript_lessons.fetch('Working with APIs'),
     javascript_lessons.fetch('Async and Await'),
@@ -95,6 +97,8 @@ course.add_section do |section|
     javascript_lessons.fetch('Space Complexity'),
     javascript_lessons.fetch('Common Data Structures and Algorithms'),
     javascript_lessons.fetch('Linked Lists'),
+    javascript_lessons.fetch('HashMap Data Structure'),
+    javascript_lessons.fetch('HashMap'),
     javascript_lessons.fetch('Binary Search Trees'),
     javascript_lessons.fetch('Knights Travails'),
   )

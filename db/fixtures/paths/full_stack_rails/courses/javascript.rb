@@ -26,20 +26,23 @@ end
 # SECTION - Organizing your JavaScript Code
 # +++++++++++++++++++++++++++++++++++++++++
 course.add_section do |section|
-  section.title = 'Organizing Your Javascript Code'
+  section.title = 'Organizing Your JavaScript Code'
   section.description = 'This series digs in to the things you need to write larger and larger applications with JavaScript. This is where it gets real!'
   section.identifier_uuid = 'd0be5e66-0acc-4c62-8993-8d50e5af15a0'
 
   section.add_lessons(
-    javascript_lessons.fetch('Organizing Your Javascript Code Introduction'),
+    javascript_lessons.fetch('Organizing Your JavaScript Code Introduction'),
     javascript_lessons.fetch('Objects and Object Constructors'),
     javascript_lessons.fetch('Library'),
     javascript_lessons.fetch('Factory Functions and the Module Pattern'),
     javascript_lessons.fetch('Tic Tac Toe'),
     javascript_lessons.fetch('Classes'),
     javascript_lessons.fetch('ES6 Modules'),
+    javascript_lessons.fetch('npm'),
     javascript_lessons.fetch('Webpack'),
     javascript_lessons.fetch('Restaurant Page'),
+    javascript_lessons.fetch('Revisiting Webpack'),
+    javascript_lessons.fetch('JSON'),
     javascript_lessons.fetch('OOP Principles'),
     javascript_lessons.fetch('Todo List'),
   )
@@ -70,7 +73,6 @@ course.add_section do |section|
   section.identifier_uuid = 'c26cc657-9d04-4d12-bc2e-1c8206696da7'
 
   section.add_lessons(
-    javascript_lessons.fetch('JSON'),
     javascript_lessons.fetch('Asynchronous Code'),
     javascript_lessons.fetch('Working with APIs'),
     javascript_lessons.fetch('Async and Await'),

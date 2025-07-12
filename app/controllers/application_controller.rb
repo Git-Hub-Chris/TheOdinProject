@@ -2,22 +2,11 @@ class ApplicationController < ActionController::Base
   include CurrentTheme
   include Pagy::Backend
 
-  protect_from_forgery with: :exception
-
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_sentry_user, if: :current_user
   before_action :store_user_location!, if: :storable_location?
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found_error
-
-  def authenticate_admin_user!
-    authenticate_user!
-
-    unless current_user.admin?
-      flash[:alert] = 'Unauthorized Access!'
-      redirect_to root_path
-    end
-  end
 
   def after_sign_out_path_for(_resource_or_scope)
     new_user_session_path

@@ -14,8 +14,8 @@ def javascript_lessons
       github_path: '/javascript/introduction/a_quick_review.md',
       identifier_uuid: '428d54c7-3324-4ee2-afaf-08e1c373b314',
     },
-    'Organizing Your Javascript Code Introduction' => {
-      title: 'Organizing Your Javascript Code Introduction',
+    'Organizing Your JavaScript Code Introduction' => {
+      title: 'Organizing Your JavaScript Code Introduction',
       description: 'introduction',
       is_project: false,
       github_path: '/javascript/organizing_your_javascript_code/organizing_your_javascript_code_introduction.md',
@@ -65,14 +65,21 @@ def javascript_lessons
       description: 'ES6 Modules',
       is_project: false,
       github_path: '/javascript/organizing_your_javascript_code/es6_modules.md',
-      identifier_uuid: '0169e4d1-e381-49e0-897b-f9364ac10e51',
+      identifier_uuid: 'ab4b6ccf-42e6-429e-a21b-0ef07bbb886e',
+    },
+    'npm' => {
+      title: 'npm',
+      description: 'npm',
+      is_project: false,
+      github_path: '/javascript/organizing_your_javascript_code/npm.md',
+      identifier_uuid: 'bec8407e-22fb-4106-8bdf-4f65b29c1365',
     },
     'Webpack' => {
       title: 'Webpack',
       description: 'Webpack',
       is_project: false,
       github_path: '/javascript/organizing_your_javascript_code/webpack.md',
-      identifier_uuid: 'eedfa6c8-b041-497d-ab37-565708a1b075',
+      identifier_uuid: '3d7e10dc-6795-471d-937a-f4b50c5872f0',
     },
     'Restaurant Page' => {
       title: 'Restaurant Page',
@@ -82,6 +89,20 @@ def javascript_lessons
       accepts_submission: true,
       previewable: true,
       identifier_uuid: 'a1453e8f-d4e8-44ce-b30e-552c65162ac6',
+    },
+    'Revisiting Webpack' => {
+      title: 'Revisiting Webpack',
+      description: 'Revisiting Webpack',
+      is_project: false,
+      github_path: '/javascript/organizing_your_javascript_code/revisiting_webpack.md',
+      identifier_uuid: '16848c3e-0320-4c7b-9d0d-3a3f0c902730',
+    },
+    'JSON' => {
+      title: 'JSON',
+      description: 'JSON',
+      is_project: false,
+      github_path: '/javascript/organizing_your_javascript_code/json.md',
+      identifier_uuid: 'ae0d44bf-60b7-4644-b61e-216a4a6b271b',
     },
     'OOP Principles' => {
       title: 'OOP Principles',
@@ -126,13 +147,6 @@ def javascript_lessons
       is_project: false,
       github_path: '/javascript/javascript_in_the_real_world/what_is_es6.md',
       identifier_uuid: 'f5c4b108-adf8-41af-bf3b-a38dd409a67d',
-    },
-    'JSON' => {
-      title: 'JSON',
-      description: 'JSON',
-      is_project: false,
-      github_path: '/javascript/asynchronous_javascript_and_apis/json.md',
-      identifier_uuid: 'ae0d44bf-60b7-4644-b61e-216a4a6b271b',
     },
     'Asynchronous Code' => {
       title: 'Asynchronous Code',
@@ -282,6 +296,22 @@ def javascript_lessons
       is_project: false,
       github_path: '/javascript/finishing_up_with_javascript/conclusion.md',
       identifier_uuid: '4b881c82-4cba-4090-a819-17aac12ccb46',
+    },
+    'HashMap Data Structure' => {
+      title: 'HashMap Data Structure',
+      description: 'Learn how a hash map works, to save and retrieve data',
+      is_project: false,
+      github_path: '/javascript/computer_science/hash_map_data_structure.md',
+      identifier_uuid: '7ab99479-0200-471f-8432-4a0f2df039b5'
+    },
+    'HashMap' => {
+      title: 'HashMap',
+      description: 'Build your very first hash map data structure from scratch',
+      is_project: true,
+      github_path: '/javascript/computer_science/project_hash_map.md',
+      accepts_submission: true,
+      previewable: false,
+      identifier_uuid: '90f1f539-fc40-46b2-91db-8c664934f5c4'
     },
   }
 end

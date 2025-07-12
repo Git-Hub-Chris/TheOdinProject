@@ -5,19 +5,10 @@ Rails.application.routes.draw do
   match '500' => 'errors#internal_server_error', via: :all
 
   draw(:redirects)
-  ActiveAdmin.routes(self)
-
-  require 'sidekiq/web'
-  authenticate :user, ->(user) { user.admin? } do
-    mount Sidekiq::Web => '/sidekiq'
-    mount Flipper::UI.app(Flipper) => 'admin/feature_flags', as: :admin_feature_flags
-  end
 
   if Rails.env.development?
     mount Lookbook::Engine, at: '/lookbook'
   end
-
-  resource :github_webhooks, only: :create, defaults: { formats: :json }
 
   unauthenticated do
     root 'static_pages#home'
@@ -40,20 +31,26 @@ Rails.application.routes.draw do
     get '/sign_up' => 'users/registrations#new'
   end
 
+  namespace :github do
+    resource :webhooks, only: :create, defaults: { formats: :json }
+  end
+
   namespace :api do
-    resources :lesson_completions, only: [:index]
     resources :points, only: %i[index show create]
   end
 
-  get 'home' => 'static_pages#home'
-  get 'about' => 'static_pages#about'
-  get 'faq' => 'static_pages#faq'
-  get 'team' => 'static_pages#team'
-  get 'contributing' => 'static_pages#contributing'
-  get 'support_us' => 'static_pages#support_us'
-  get 'terms_of_use' => 'static_pages#terms_of_use'
-  get 'privacy-policy' => 'static_pages#privacy_policy'
-  get 'success_stories' => 'static_pages#success_stories'
+  scope controller: :static_pages do
+    get 'home'
+    get 'about'
+    get 'faq'
+    get 'team'
+    get 'contributing'
+    get 'support_us'
+    get 'terms_of_use'
+    get 'privacy-policy'
+    get 'success_stories'
+  end
+
   get 'sitemap' => 'sitemap#index', defaults: { format: 'xml' }
 
   namespace :guides do
@@ -75,7 +72,6 @@ Rails.application.routes.draw do
   namespace :users do
     resources :paths, only: :create
     resources :progress, only: :destroy
-    resources :project_submissions, only: %i[edit update]
     resource :profile, only: %i[edit update]
     resources :bookmarks, only: %i[index new create destroy]
   end
@@ -106,4 +102,7 @@ Rails.application.routes.draw do
 
   resources :notifications, only: %i[index update]
   resource :themes, only: :update
+  resources :interview_surveys, only: %i[new create]
+
+  draw(:admin)
 end

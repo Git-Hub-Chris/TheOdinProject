@@ -21,6 +21,10 @@ class Lesson < ApplicationRecord
 
   attribute :completed, :boolean, default: false
 
+  def recently_added?
+    created_at > 2.weeks.ago.beginning_of_day
+  end
+
   def complete!
     self.completed = true
   end
@@ -30,7 +34,7 @@ class Lesson < ApplicationRecord
   end
 
   def import_content_from_github
-    LessonContentImporter.for(self)
+    Github::LessonContentImporter.for(self)
   end
 
   def display_title

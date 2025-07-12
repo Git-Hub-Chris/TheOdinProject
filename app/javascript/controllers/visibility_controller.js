@@ -1,40 +1,43 @@
-/* eslint no-await-in-loop:0, no-restricted-syntax:0 */
-import { Controller } from '@hotwired/stimulus';
-import { useClickOutside } from 'stimulus-use';
-import { enter, leave } from 'el-transition';
+import { Controller } from '@hotwired/stimulus'
+import { useClickOutside } from 'stimulus-use'
+import { enter, leave } from 'el-transition'
 
 // transitions are optional, but to use them add the el-transition data attributes listed below to content targets:
 // https://github.com/mmccall10/el-transition#dataset-attributes
 export default class VisibilityController extends Controller {
-  static targets = ['content'];
+  static targets = ['content']
 
   static values = {
-    visible: Boolean,
-  };
-
-  connect() {
-    useClickOutside(this);
+    visible: Boolean
   }
 
-  on() {
-    this.visibleValue = true;
+  connect () {
+    useClickOutside(this)
   }
 
-  off() {
-    this.visibleValue = false;
+  disconnect () {
+    this.contentTargets.forEach((element) => element.classList.toggle('hidden', true))
   }
 
-  toggle() {
-    this.visibleValue = !this.visibleValue;
+  on () {
+    this.visibleValue = true
   }
 
-  async visibleValueChanged(visible) {
+  off () {
+    this.visibleValue = false
+  }
+
+  toggle () {
+    this.visibleValue = !this.visibleValue
+  }
+
+  async visibleValueChanged (visible) {
     if (visible) {
-      this.contentTargets.forEach((element) => enter(element));
+      this.contentTargets.forEach((element) => enter(element))
     } else {
       for (const el of this.contentTargets.reverse()) {
         // each transition will wait for the previous one to finish
-        await leave(el);
+        await leave(el)
       }
     }
   }

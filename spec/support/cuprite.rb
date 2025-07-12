@@ -15,6 +15,7 @@ Capybara.register_driver(:odin_cuprite) do |app|
     app,
     window_size: [1200, 1200],
     browser_options: {},
+    flatten: false,
     process_timeout: 30,
     timeout: 60,
     inspector: true,
@@ -24,7 +25,6 @@ Capybara.register_driver(:odin_cuprite) do |app|
 end
 
 Capybara.default_driver = :odin_cuprite
-Capybara.javascript_driver = :odin_cuprite
 
 RSpec.configure do |config|
   config.prepend_before(:each, type: :system) do

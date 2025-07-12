@@ -10,23 +10,67 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_31_013215) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "active_admin_comments", id: :serial, force: :cascade do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_type"
-    t.integer "resource_id"
-    t.string "author_type"
-    t.integer "author_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "admin_roles", ["moderator", "maintainer", "core"]
+  create_enum "admin_user_status", ["pending", "activated", "deactivated", "pending_reactivation"]
+
+  create_table "activities", force: :cascade do |t|
+    t.string "trackable_type"
+    t.bigint "trackable_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "key"
+    t.jsonb "parameters", default: {}, null: false
+    t.string "recipient_type"
+    t.bigint "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
+    t.index ["owner_type", "owner_id"], name: "index_activities_on_owner"
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
+    t.index ["recipient_type", "recipient_id"], name: "index_activities_on_recipient"
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+    t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable"
+  end
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer "invitation_limit"
+    t.string "invited_by_type"
+    t.bigint "invited_by_id"
+    t.integer "invitations_count", default: 0
+    t.enum "status", default: "pending", null: false, enum_type: "admin_user_status"
+    t.datetime "deactivated_at"
+    t.datetime "reactivated_at"
+    t.string "otp_secret"
+    t.integer "consumed_timestep"
+    t.boolean "otp_required_for_login", default: false
+    t.enum "role", null: false, enum_type: "admin_roles"
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["invitation_token"], name: "index_admin_users_on_invitation_token", unique: true
+    t.index ["invited_by_id"], name: "index_admin_users_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_admin_users_on_invited_by"
+    t.index ["name"], name: "index_admin_users_on_name", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
   create_table "announcements", id: :serial, force: :cascade do |t|
@@ -34,10 +78,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_31_013215) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "message", limit: 255
     t.datetime "expires_at", precision: nil, null: false
-    t.bigint "user_id"
     t.string "learn_more_url"
+    t.bigint "created_by_id", null: false
+    t.index ["created_by_id"], name: "index_announcements_on_created_by_id"
     t.index ["expires_at"], name: "index_announcements_on_expires_at"
-    t.index ["user_id"], name: "index_announcements_on_user_id"
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -69,6 +113,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_31_013215) do
     t.integer "path_id"
     t.boolean "show_on_homepage", default: false, null: false
     t.string "badge_uri", null: false
+    t.integer "lessons_count", default: 0, null: false
+    t.integer "projects_count", default: 0, null: false
     t.index ["identifier_uuid"], name: "index_courses_on_identifier_uuid", unique: true
     t.index ["path_id"], name: "index_courses_on_path_id"
     t.index ["slug"], name: "index_courses_on_slug"
@@ -79,13 +125,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_31_013215) do
     t.bigint "project_submission_id", null: false
     t.text "extra", default: ""
     t.integer "status", default: 0, null: false
-    t.integer "taken_action", default: 0, null: false
+    t.integer "action_taken", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "resolved_by_id"
     t.integer "reason", default: 4, null: false
+    t.bigint "resolved_by_id"
     t.index ["flagger_id"], name: "index_flags_on_flagger_id"
     t.index ["project_submission_id"], name: "index_flags_on_project_submission_id"
+    t.index ["resolved_by_id"], name: "index_flags_on_resolved_by_id"
   end
 
   create_table "flipper_features", force: :cascade do |t|
@@ -98,7 +145,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_31_013215) do
   create_table "flipper_gates", force: :cascade do |t|
     t.string "feature_key", null: false
     t.string "key", null: false
-    t.string "value"
+    t.text "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
@@ -208,6 +255,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_31_013215) do
     t.string "identifier_uuid", default: "", null: false
     t.string "short_title"
     t.string "badge_uri", null: false
+    t.integer "users_count", default: 0
     t.index ["identifier_uuid"], name: "index_paths_on_identifier_uuid", unique: true
     t.index ["slug"], name: "index_paths_on_slug", unique: true
   end
@@ -229,9 +277,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_31_013215) do
     t.integer "likes_count", default: 0
     t.datetime "discarded_at", precision: nil
     t.datetime "discard_at", precision: nil
+    t.index ["created_at"], name: "index_project_submissions_on_created_at"
     t.index ["discarded_at"], name: "index_project_submissions_on_discarded_at"
     t.index ["is_public"], name: "index_project_submissions_on_is_public"
     t.index ["lesson_id"], name: "index_project_submissions_on_lesson_id"
+    t.index ["likes_count"], name: "index_project_submissions_on_likes_count"
     t.index ["user_id", "lesson_id"], name: "index_project_submissions_on_user_id_and_lesson_id", unique: true, where: "(discarded_at IS NULL)"
     t.index ["user_id"], name: "index_project_submissions_on_user_id"
   end
@@ -283,19 +333,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_31_013215) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "username", limit: 255
     t.text "learning_goal"
-    t.boolean "admin", default: false, null: false
     t.string "avatar"
     t.integer "path_id", default: 1
     t.boolean "banned", default: false, null: false
+    t.virtual "search_tsvector", type: :tsvector, as: "(setweight(to_tsvector('english'::regconfig, (COALESCE(email, ''::character varying))::text), 'A'::\"char\") || setweight(to_tsvector('english'::regconfig, (COALESCE(username, ''::character varying))::text), 'B'::\"char\"))", stored: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["search_tsvector"], name: "index_users_on_search_tsvector", using: :gin
     t.index ["username"], name: "index_users_on_username"
   end
 
-  add_foreign_key "announcements", "users"
-  add_foreign_key "bookmarks", "lessons"
-  add_foreign_key "bookmarks", "users"
   add_foreign_key "contents", "lessons"
+  add_foreign_key "flags", "admin_users", column: "resolved_by_id"
   add_foreign_key "flags", "project_submissions"
   add_foreign_key "flags", "users", column: "flagger_id"
   add_foreign_key "lesson_completions", "lessons", on_delete: :cascade
@@ -305,4 +354,37 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_31_013215) do
   add_foreign_key "path_prerequisites", "paths", column: "prerequisite_id"
   add_foreign_key "project_submissions", "lessons"
   add_foreign_key "project_submissions", "users"
+
+  create_view "all_lesson_completions_day_stats", materialized: true, sql_definition: <<-SQL
+      SELECT row_number() OVER (ORDER BY ((lesson_completions.created_at)::date)) AS id,
+      (lesson_completions.created_at)::date AS date,
+      count(*) AS completions_count
+     FROM lesson_completions
+    GROUP BY ((lesson_completions.created_at)::date)
+    ORDER BY ((lesson_completions.created_at)::date);
+  SQL
+  create_view "path_lesson_completions_day_stats", materialized: true, sql_definition: <<-SQL
+      SELECT row_number() OVER (ORDER BY ((lesson_completions.created_at)::date) DESC) AS id,
+      lesson_completions.path_id,
+      lesson_completions.lesson_id,
+      lesson_completions.course_id,
+      lessons."position" AS lesson_position,
+      courses."position" AS course_position,
+      (lesson_completions.created_at)::date AS date,
+      lessons.title AS lesson_title,
+      count(*) AS completions_count
+     FROM ((lesson_completions
+       JOIN lessons ON ((lesson_completions.lesson_id = lessons.id)))
+       JOIN courses ON ((lesson_completions.course_id = courses.id)))
+    GROUP BY ((lesson_completions.created_at)::date), lesson_completions.path_id, lesson_completions.lesson_id, lessons.title, lesson_completions.course_id, lessons."position", courses."position"
+    ORDER BY ((lesson_completions.created_at)::date) DESC;
+  SQL
+  create_view "user_sign_ups_day_stats", materialized: true, sql_definition: <<-SQL
+      SELECT row_number() OVER (ORDER BY ((users.created_at)::date)) AS id,
+      (users.created_at)::date AS date,
+      count(*) AS sign_ups_count
+     FROM users
+    GROUP BY ((users.created_at)::date)
+    ORDER BY ((users.created_at)::date);
+  SQL
 end
