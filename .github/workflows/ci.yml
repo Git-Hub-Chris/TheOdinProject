@@ -8,6 +8,9 @@ on:
 
 concurrency: ci-${{ github.ref }}
 
+permissions:
+  contents: read
+
 jobs:
   linters:
     name: Linters
@@ -96,9 +99,5 @@ jobs:
 
       - name: Setup test database
         run: |
-          bundle exec rake parallel:create
-          bundle exec rake parallel:load_schema
-          bundle exec rake parallel:migrate
 
-      - name: Run tests
         run: ./bin/ci_spec
