@@ -93,6 +93,7 @@ jobs:
           yarn install
 
       - name: Build assets
+
         run: |
           bin/rails javascript:build
           bin/rails css:build
