@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_06_175334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -83,6 +82,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_06_175334) do
     t.bigint "created_by_id", null: false
     t.index ["created_by_id"], name: "index_announcements_on_created_by_id"
     t.index ["expires_at"], name: "index_announcements_on_expires_at"
+  end
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.bigint "lesson_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lesson_id"], name: "index_bookmarks_on_lesson_id"
+    t.index ["user_id", "lesson_id"], name: "index_bookmarks_on_user_id_and_lesson_id", unique: true
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
   create_table "contents", force: :cascade do |t|
@@ -324,16 +333,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_06_175334) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "username", limit: 255
     t.text "learning_goal"
-    t.boolean "admin", default: false, null: false
     t.string "avatar"
     t.integer "path_id", default: 1
     t.boolean "banned", default: false, null: false
+    t.virtual "search_tsvector", type: :tsvector, as: "(setweight(to_tsvector('english'::regconfig, (COALESCE(email, ''::character varying))::text), 'A'::\"char\") || setweight(to_tsvector('english'::regconfig, (COALESCE(username, ''::character varying))::text), 'B'::\"char\"))", stored: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["search_tsvector"], name: "index_users_on_search_tsvector", using: :gin
     t.index ["username"], name: "index_users_on_username"
   end
 
-  add_foreign_key "announcements", "admin_users", column: "created_by_id"
   add_foreign_key "contents", "lessons"
   add_foreign_key "flags", "admin_users", column: "resolved_by_id"
   add_foreign_key "flags", "project_submissions"
