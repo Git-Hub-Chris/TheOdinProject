@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe ProjectSubmission do
   subject(:project_submission) { create(:project_submission) }
 
+  it_behaves_like 'likeable', :project_submission
+
   it { is_expected.to belong_to(:user) }
   it { is_expected.to belong_to(:lesson) }
   it { is_expected.to have_many(:flags) }
@@ -16,11 +18,15 @@ RSpec.describe ProjectSubmission do
   it { is_expected.to allow_value('https://www.github.com/fff').for(:live_preview_url) }
   it { is_expected.not_to allow_value('not_a_url').for(:live_preview_url) }
 
-  it { is_expected.to validate_uniqueness_of(:user_id).scoped_to(:lesson_id) }
+  it do
+    expect(project_submission).to validate_uniqueness_of(:user_id)
+      .scoped_to(:lesson_id)
+      .with_message('You have already submitted a project for this lesson')
+  end
 
   context 'when live preview is not allowed' do
     subject(:project_submission) do
-      build(:project_submission, lesson: create(:lesson, has_live_preview: false))
+      build(:project_submission, lesson: create(:lesson, previewable: false))
     end
 
     it do
@@ -31,10 +37,11 @@ RSpec.describe ProjectSubmission do
   end
 
   describe '.only_public' do
-    it 'returns public project submissions' do
+    it 'returns public project submissions that have not been discarded' do
       public_project_submission_one = create(:project_submission)
       public_project_submission_two = create(:project_submission)
       create(:project_submission, is_public: false)
+      create(:project_submission, discarded_at: Time.zone.today)
 
       expect(described_class.only_public).to contain_exactly(
         public_project_submission_one,
@@ -55,19 +62,16 @@ RSpec.describe ProjectSubmission do
     end
   end
 
-  describe '.created_today' do
-    it 'returns projects submission created today' do
-      project_submission_created_today = create(
-        :project_submission,
-        created_at: Time.zone.today
-      )
+  describe '.submitted_on' do
+    it 'returns project submissions submitted on a given date' do
+      project_submission_submitted_yesterday = create(:project_submission, created_at: Time.zone.yesterday)
+      create(:project_submission, created_at: Time.zone.today)
+      create(:project_submission, created_at: Time.zone.tomorrow)
+      create(:project_submission, created_at: Time.zone.yesterday - 1.day)
 
-      project_submission_not_not_created_today = create(
-        :project_submission,
-        created_at: Time.zone.today - 2.days
+      expect(described_class.submitted_on(Time.zone.yesterday)).to contain_exactly(
+        project_submission_submitted_yesterday
       )
-
-      expect(described_class.created_today).to contain_exactly(project_submission_created_today)
     end
   end
 
@@ -117,6 +121,56 @@ RSpec.describe ProjectSubmission do
     end
   end
 
+  describe '.sort_by_params' do
+    context "when sorting by 'created_at'" do
+      it 'returns a list of project submissions sorted by created_at desc' do
+        newest = create(:project_submission, created_at: 1.day.ago)
+        last_week = create(:project_submission, created_at: 1.week.ago)
+        oldest = create(:project_submission, created_at: 2.weeks.ago)
+
+        expect(described_class.sort_by_params('created_at')).to eq(
+          [newest, last_week, oldest]
+        )
+      end
+    end
+
+    context "when sorting by 'created_at' asc" do
+      it 'returns a list of project submissions sorted by created_at ascending' do
+        newest = create(:project_submission, created_at: 1.day.ago)
+        last_week = create(:project_submission, created_at: 1.week.ago)
+        oldest = create(:project_submission, created_at: 2.weeks.ago)
+
+        expect(described_class.sort_by_params('created_at', 'asc')).to eq(
+          [oldest, last_week, newest]
+        )
+      end
+    end
+
+    context "when sorting by 'likes_count'" do
+      it 'returns a list of project submissions sorted by likes_count' do
+        most_likes = create(:project_submission, likes_count: 10)
+        some_likes = create(:project_submission, likes_count: 5)
+        no_likes = create(:project_submission, likes_count: 0)
+
+        expect(described_class.sort_by_params('likes_count')).to eq(
+          [most_likes, some_likes, no_likes]
+        )
+      end
+    end
+
+    context 'when sort column is not allowed' do
+      it 'defaults to sorting by created_at' do
+        newest = create(:project_submission, created_at: 1.day.ago)
+        last_week = create(:project_submission, created_at: 1.week.ago)
+        oldest = create(:project_submission, created_at: 2.weeks.ago)
+
+        expect(described_class.sort_by_params('updated_at')).to eq(
+          [newest, last_week, oldest]
+        )
+      end
+    end
+  end
+
   describe '.before_update callback' do
     let(:discardable_project_submission) { create(:project_submission, discard_at: discard_date) }
     let(:discard_date) { DateTime.new(2021, 9, 1) }
@@ -147,6 +201,12 @@ RSpec.describe ProjectSubmission do
 
         expect(discardable_project_submission.reload.discard_at).to eq(discard_date)
       end
+    end
+  end
+
+  describe '#sortable_columns' do
+    it 'returns an array of sortable columns' do
+      expect(described_class.sortable_columns).to eq(%w[created_at likes_count])
     end
   end
 end

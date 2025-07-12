@@ -1,10 +1,21 @@
 require 'capybara/cuprite'
 
-Capybara.register_driver(:cuprite) do |app|
+module CupriteHelpers
+  def pause
+    page.driver.pause
+  end
+
+  def debug(*)
+    page.driver.debug(*)
+  end
+end
+
+Capybara.register_driver(:odin_cuprite) do |app|
   Capybara::Cuprite::Driver.new(
     app,
     window_size: [1200, 1200],
     browser_options: {},
+    flatten: false,
     process_timeout: 30,
     timeout: 60,
     inspector: true,
@@ -13,22 +24,11 @@ Capybara.register_driver(:cuprite) do |app|
   )
 end
 
-Capybara.default_driver = :cuprite
-Capybara.javascript_driver = :cuprite
-
-module CupriteHelpers
-  def pause
-    page.driver.pause
-  end
-
-  def debug(*args)
-    page.driver.debug(*args)
-  end
-end
+Capybara.default_driver = :odin_cuprite
 
 RSpec.configure do |config|
   config.prepend_before(:each, type: :system) do
-    driven_by :cuprite
+    driven_by :odin_cuprite
   end
 
   config.include CupriteHelpers, type: :system

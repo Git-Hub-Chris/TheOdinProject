@@ -14,7 +14,7 @@ RSpec.describe Notifications::DailySummary do
 
     it 'returns the daily summary message' do
       expect(notification.message).to eql(
-        "**TOP Summary For April 10th, 2020**\n" \
+        "**TOP Summary For April 9th, 2020 (UTC)**\n" \
         "0 users signed up\n" \
         "0 lessons completed\n" \
         "0 project submissions added\n" \
@@ -25,7 +25,7 @@ RSpec.describe Notifications::DailySummary do
 
   describe '#destination' do
     around do |example|
-      ClimateControl.modify(
+      Dotenv.modify(
         DISCORD_LESSON_COMPLETION_WEBHOOK_URL: 'Lesson Completion Channel'
       ) do
         example.run

@@ -1,15 +1,29 @@
 class ProjectSubmissions::LikesController < ApplicationController
   before_action :authenticate_user!
+  before_action :authorize_like
 
-  def create
-    @project_submission = ProjectSubmission.find(params[:submission_id])
+  def update
+    @project_submission = ProjectSubmission.find(params[:project_submission_id])
 
-    if params[:is_liked_by_current_user]
-      @project_submission.unliked_by current_user
+    if @project_submission.liked_by?(current_user)
+      @project_submission.unlike(current_user)
     else
-      @project_submission.liked_by current_user
+      @project_submission.like(current_user)
     end
 
-    render json: ProjectSubmissionSerializer.as_json(@project_submission, current_user), status: :ok
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
+  private
+
+  def authorize_like
+    return if SubmissionLikePolicy.new(current_user).allowed?
+
+    respond_to do |format|
+      flash.now[:alert] = 'Failed to like.'
+      format.turbo_stream { render turbo_stream: turbo_stream.update('flash-messages', partial: 'shared/flash') }
+    end
   end
 end

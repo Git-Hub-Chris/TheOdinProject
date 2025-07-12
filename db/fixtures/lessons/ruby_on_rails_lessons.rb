@@ -1,7 +1,7 @@
 def ruby_on_rails_lessons
   {
-    'How this Course Will Work' => {
-      title: 'How this Course Will Work',
+    'How This Course Will Work' => {
+      title: 'How This Course Will Work',
       description: "Let's get acquainted with what this will look like from here on out.",
       is_project: false,
       github_path: '/ruby_on_rails/introduction/how_this_course_will_work.md',
@@ -13,7 +13,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/introduction/project_installing_rails.md',
       accepts_submission: false,
-      has_live_preview: false,
+      previewable: false,
       identifier_uuid: '9dbd5caa-a77d-4731-8897-542aae2984e3',
       installation_lesson: true,
     },
@@ -58,7 +58,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/rails_basics/project_blog_app.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: '00167c46-3d50-410f-947a-729571744920'
     },
     'Active Record Basics' => {
@@ -74,7 +74,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/active_record_basics/project_micro_reddit.md',
       accepts_submission: true,
-      has_live_preview: false,
+      previewable: false,
       identifier_uuid: 'f46373db-e4e2-4aec-866e-b0123fc7928e',
     },
     'The Asset Pipeline' => {
@@ -111,7 +111,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/forms_and_authentication/project_forms.md',
       accepts_submission: true,
-      has_live_preview: false,
+      previewable: false,
       identifier_uuid: '3f3fa50c-9223-4178-b86a-6b50caf30896',
     },
     'Sessions, Cookies and Authentication' => {
@@ -127,7 +127,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/forms_and_authentication/project_members_only.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: '038fc7b2-11df-4d95-9cc9-f6006e51ec2d',
     },
     'Active Record Queries' => {
@@ -150,7 +150,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/advanced_forms_and_activerecord/project_private_events.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: '54233186-d525-4647-a001-91049353ecec',
     },
     'Active Record Callbacks' => {
@@ -173,7 +173,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/advanced_forms_and_activerecord/project_flight_booker.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: '52cb7814-24f0-450a-9bf2-39cde4a680da',
     },
     'APIs and Building Your Own' => {
@@ -183,8 +183,8 @@ def ruby_on_rails_lessons
       github_path: '/ruby_on_rails/apis/apis_and_building_your_own.md',
       identifier_uuid: 'd3fcb7b6-ba98-4c81-87cc-7eae3f17c990',
     },
-    'Working With External APIs' => {
-      title: 'Working With External APIs',
+    'Working with External APIs' => {
+      title: 'Working with External APIs',
       description: "Lots of the power of APIs comes from interfacing with third-party applications, which we'll cover in this lesson.",
       is_project: false,
       github_path: '/ruby_on_rails/apis/working_with_external_apis.md',
@@ -196,7 +196,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/apis/project_kittens_api.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: '5d0433d7-f3f3-46fa-99e7-3bc5893a2599'
     },
     'Flickr API' => {
@@ -205,7 +205,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/apis/project_flickr_api.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: '2adcd199-34b4-47e0-875c-0df9ecd61ea9',
     },
     'CSS Bundling' => {
@@ -249,7 +249,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/mailers_advanced_topics/project_sending_confirmation_emails.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: 'bd6d78b4-cefd-4938-8818-5adfe5620c2b'
     },
     'Advanced Topics' => {
@@ -272,7 +272,7 @@ def ruby_on_rails_lessons
       is_project: true,
       github_path: '/ruby_on_rails/mailers_advanced_topics/project_final.md',
       accepts_submission: true,
-      has_live_preview: true,
+      previewable: true,
       identifier_uuid: '3eac603e-c8e7-4ba8-ade0-87c4e3c3de59',
     },
     'Conclusion' => {
@@ -289,6 +289,27 @@ def ruby_on_rails_lessons
       github_path: '/ruby_on_rails/advanced_forms_and_activerecord/installing_psql.md',
       identifier_uuid: 'b2990a57-ff1f-4b08-a607-2b7bd35fca50',
       installation_lesson: true,
+    },
+    'Basic Associations' => {
+      title: 'Basic Associations',
+      description: 'This lesson explains the basics of using Active Record associations to define relationships between models',
+      is_project: false,
+      github_path: '/ruby_on_rails/active_record_basics/basic_associations.md',
+      identifier_uuid: '4bea2014-62ab-490d-be29-9dda2a52445f',
+    },
+    'Basic Validations' => {
+      title: 'Basic Validations',
+      description: 'This lesson explains the basics of validating user data in your Rails applications',
+      is_project: false,
+      github_path: '/ruby_on_rails/active_record_basics/basic_validations.md',
+      identifier_uuid: '1063f583-493f-4faf-81e6-3faf5ee76c9c',
+    },
+    'Migrations' => {
+      title: 'Migrations',
+      description: 'This lesson explains how migrations are used to change your database schema',
+      is_project: false,
+      github_path: '/ruby_on_rails/active_record_basics/migrations.md',
+      identifier_uuid: 'f964a585-e24c-444e-a2be-13a5339172d9',
     }
   }
 end

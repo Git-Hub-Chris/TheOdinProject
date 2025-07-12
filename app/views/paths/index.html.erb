@@ -4,19 +4,25 @@
   <div class="max-w-4xl mx-auto">
     <h1 class="page-heading-title">All Paths</h1>
 
-    <%= render CardComponent.new do |card| %>
+    <%= render CardComponent.new(classes: 'relative') do |card| %>
       <% card.with_header(classes: 'md:pb-6 md:border-b border-gray-200 dark:border-gray-600') do %>
         <div class=" flex justify-between items-center flex-col sm:flex-row space-y-4 sm:space-y-0">
           <div class="flex flex-col space-y-5 sm:space-x-6 sm:space-y-0 sm:flex-row items-center">
             <%= link_to path_path(@foundations), class: 'p-2 dark:bg-gray-700/50 rounded-full' do %>
-              <%= image_tag @foundations.badge_uri, alt: "#{@foundations.title} badge", class: 'w-24 h-24' %>
+              <%= image_tag @foundations.badge_uri, alt: @foundations.title, class: 'w-24 h-24' %>
             <% end %>
             <div class="flex items-center flex-col sm:block">
-              <h3 class="text-sm text-gold-600">Start here</h3>
               <%= link_to path_path(@foundations), class: 'no-underline' do %>
                 <h2 class="text-3xl font-medium text-gray-800 dark:text-gray-300">Foundations</h2>
               <% end %>
             </div>
+            <% if current_user.present? && current_user.on_path?(@foundations) %>
+              <div class="absolute top-3.5 right-3.5 mt-0! md:static">
+                <%= render Ui::BadgeComponent.new(color: 'green') do %>
+                  Selected
+                <% end %>
+              </div>
+            <% end %>
           </div>
 
           <div class="space-x-6 justify-center hidden md:flex">
@@ -50,19 +56,26 @@
     <div class="flex gap-x-10 gap-y-6 flex-col md:flex-row">
       <% @fullstack_paths.each do |path| %>
 
-        <%= render CardComponent.new(classes: 'flex flex-col') do |card| %>
+        <%= render CardComponent.new(classes: 'flex flex-col relative') do |card| %>
           <% card.with_header(classes: 'flex flex-col justify-between items-center') do %>
+            <div class="absolute top-3.5 right-3.5">
+              <% if current_user.present? && current_user.on_path?(path) %>
+                <%= render Ui::BadgeComponent.new(color: 'green') do %>
+                  Selected
+                <% end %>
+              <% end %>
+            </div>
             <%= link_to path_path(path), class: 'p-2 dark:bg-gray-700/50 rounded-full' do %>
-              <%= image_tag path.badge_uri, alt: "#{path.title} badge", class: 'w-24 h-24' %>
+              <%= image_tag path.badge_uri, alt: path.title, class: 'w-24 h-24' %>
             <% end %>
 
             <div class="w-full flex justify-between pt-6">
-              <p class=" text-gold-600">PATH</p>
+              <p class="text-gray-500">PATH</p>
               <p class=" text-gray-500 dark:text-gray-400"><%= path.courses.size %> Courses</p>
             </div>
           <% end %>
 
-          <% card.with_body(classes: 'flex-grow') do %>
+          <% card.with_body(classes: 'grow') do %>
             <%= link_to path_path(path), class: 'no-underline' do %>
               <h2 class="text-xl font-medium pb-4 text-gray-800 dark:text-gray-200">
                 <%= path.title %>

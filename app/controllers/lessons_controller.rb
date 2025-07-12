@@ -1,38 +1,25 @@
 class LessonsController < ApplicationController
   before_action :set_cache_control_header_to_no_store
+  before_action :set_lesson
+  before_action :set_bookmark
 
   def show
-    @lesson = Lesson.find(params[:id])
-
     if user_signed_in?
-      mark_completed
-      @project_submissions = public_project_submissions
-      @user_submission = current_user_submission
+      @project_submission = current_user.project_submissions.find_by(lesson: @lesson)
+      Courses::MarkCompletedLessons.call(user: current_user, lessons: Array(@lesson))
     end
   end
 
   private
 
-  def public_project_submissions
-    project_submissions_query.public_submissions.map do |submission|
-      ProjectSubmissionSerializer.as_json(submission, current_user) if submission.present?
-    end
+  def set_lesson
+    @lesson = Lesson.find(params[:id])
   end
 
-  def current_user_submission
-    submission = project_submissions_query.current_user_submission
+  def set_bookmark
+    return unless current_user
+    return unless Feature.enabled?(:bookmarks, current_user)
 
-    ProjectSubmissionSerializer.as_json(submission, current_user) if submission.present?
-  end
-
-  def project_submissions_query
-    ::LessonProjectSubmissionsQuery.new(lesson: @lesson, current_user:, limit: 10)
-  end
-
-  def mark_completed
-    Courses::MarkCompletedLessons.call(
-      user: current_user,
-      lessons: Array(@lesson)
-    )
+    @bookmark = current_user.bookmarks.find_by(lesson_id: @lesson.id)
   end
 end

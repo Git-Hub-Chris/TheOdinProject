@@ -12,7 +12,7 @@
 
       <%= link_to 'View Full Curriculum', paths_url, class: 'button button--secondary text-base' %>
     </header>
-    <%= image_tag 'home-isometric.svg', alt: 'home-page-banner' %>
+    <%= image_tag 'home-isometric.svg', alt: 'home-page-banner', class: 'w-full h-full' %>
   </div>
 
   <%= render 'static_pages/home/how_it_works' %>
@@ -20,4 +20,8 @@
   <%= render 'static_pages/home/curriculum', courses: @courses %>
 
   <%= render 'static_pages/home/success_stories', cache: true %>
+
+  <% if Rails.env.test? && Feature.enabled?(:test_feature, current_user) %>
+    test feature is enabled
+  <% end %>
 </div>
