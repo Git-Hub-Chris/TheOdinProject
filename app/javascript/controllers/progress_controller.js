@@ -4,7 +4,7 @@ export default class ProgressController extends Controller {
   static targets = ['progressCircle']
 
   static values = {
-    percent: Number
+
   }
 
   connect () {

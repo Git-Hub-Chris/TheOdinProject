@@ -1,4 +1,7 @@
 name: Heroku Review App on label
+permissions:
+  contents: read
+  pull-requests: write
 on:
   pull_request:
     types: [labeled]
