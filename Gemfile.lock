@@ -419,10 +419,10 @@ GEM
       netrc (~> 0.8)
     rexml (3.4.1)
     rotp (6.3.0)
-    rqrcode (2.2.0)
+
       chunky_png (~> 1.0)
-      rqrcode_core (~> 1.0)
-    rqrcode_core (1.2.0)
+      rqrcode_core (~> 2.0)
+    rqrcode_core (2.0.0)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -598,7 +598,7 @@ DEPENDENCIES
   rack-attack (~> 6.7)
   rack-mini-profiler
   redis (~> 5.4)
-  rqrcode (~> 2.2)
+
   rspec-retry (~> 0.6)
   rspec-snapshot (~> 2.0)
   rspec_junit_formatter (~> 0.6)
