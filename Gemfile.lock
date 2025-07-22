@@ -284,7 +284,7 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (9.19.0)
     nio4r (2.7.4)
-    nokogiri (1.18.8-x86_64-linux-gnu)
+    nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
     noticed (2.7.1)
       rails (>= 6.1.0)
@@ -419,7 +419,9 @@ GEM
       netrc (~> 0.8)
     rexml (3.4.1)
     rotp (6.3.0)
-
+      chunky_png (~> 1.0)
+      rqrcode_core (~> 2.0)
+    rqrcode (3.1.0)
       chunky_png (~> 1.0)
       rqrcode_core (~> 2.0)
     rqrcode_core (2.0.0)
@@ -598,7 +600,7 @@ DEPENDENCIES
   rack-attack (~> 6.7)
   rack-mini-profiler
   redis (~> 5.4)
-
+  rqrcode (~> 3.1)
   rspec-retry (~> 0.6)
   rspec-snapshot (~> 2.0)
   rspec_junit_formatter (~> 0.6)
